@@ -8,11 +8,10 @@ const taskSchema = new mongoose.Schema({
     enum: ["Pending", "Ongoing", "Completed"], 
     default: "Pending" 
   },
-  projectId: { type: mongoose.Schema.Types.ObjectId, ref: "Project" },
-  assignedTo: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  isPinnedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  projectId: { type: mongoose.Schema.Types.ObjectId, ref: "Project", index: true },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", index: true },
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
 }, { timestamps: true });
+
 
 export default mongoose.model("Task", taskSchema);

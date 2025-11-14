@@ -1,11 +1,22 @@
-export default function DashboardSidebar({ allProjects, pinnedProjects, pinnedTasks }) {
-  const renderList = (title, items) => (
+export default function DashboardSidebar({ allProjects, pinnedProjects, pinnedTasks, onProjectClick }) {
+  const renderList = (title, items, isTask = false) => (
     <div style={{ marginBottom: "1.5rem" }}>
       <h3>{title}</h3>
       {items.length ? (
-        <ul>
+        <ul style={{ listStyle: "none", padding: 0 }}>
           {items.map((item) => (
-            <li key={item._id}>{item.name}</li>
+            <li
+              key={item._id}
+              onClick={() => !isTask && onProjectClick(item)} // tasks can be non-clickable or handle differently
+              style={{
+                cursor: !isTask ? "pointer" : "default",
+                padding: "0.3rem 0",
+                color: !isTask ? "#007bff" : "#555",
+                textDecoration: !isTask ? "underline" : "none",
+              }}
+            >
+              {item.name}
+            </li>
           ))}
         </ul>
       ) : (
@@ -15,14 +26,16 @@ export default function DashboardSidebar({ allProjects, pinnedProjects, pinnedTa
   );
 
   return (
-    <aside style={{
-      width: "220px",
-      padding: "1rem",
-      borderRight: "1px solid #ccc",
-    }}>
-      {renderList("All Projects", allProjects)}
+    <aside
+      style={{
+        width: "220px",
+        padding: "1rem",
+        borderRight: "1px solid #ccc",
+      }}
+    >
       {renderList("Pinned Projects", pinnedProjects)}
-      {renderList("Pinned Tasks", pinnedTasks)}
+      {renderList("All Projects", allProjects)}
+      {renderList("Pinned Tasks", pinnedTasks, true)} {/* tasks non-clickable */}
     </aside>
   );
 }

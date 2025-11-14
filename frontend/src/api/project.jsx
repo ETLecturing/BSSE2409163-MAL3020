@@ -50,3 +50,23 @@ export async function fetchProjects(token) {
     return [];
   }
 }
+
+// Fetch tasks for a specific project using existing /api/tasks route
+export async function fetchProjectTasks(projectId, token) {
+  try {
+    const res = await fetch(`http://localhost:5000/api/tasks?projectId=${projectId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      console.error("Project tasks fetch failed:", data);
+      return [];
+    }
+
+    return await res.json(); // backend returns array
+  } catch (err) {
+    console.warn("Project tasks fetch failed, returning []", err);
+    return [];
+  }
+}

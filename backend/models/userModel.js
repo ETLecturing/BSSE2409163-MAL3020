@@ -1,16 +1,14 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-const userSchema = new mongoose.Schema(
-  {
-    name: { type: String},
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    pinnedProjects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Project" }],
-    pinnedTasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }],
-  },
-  { timestamps: true }
-);
+const userSchema = new mongoose.Schema({
+  name: { type: String },
+  username: { type: String, required: true, unique: true, index: true },
+  password: { type: String, required: true },
+  pinnedProjects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Project", index: true }],
+  pinnedTasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task", index: true }],
+}, { timestamps: true });
+
 
 // Hash password before saving
 userSchema.pre("save", async function (next) {

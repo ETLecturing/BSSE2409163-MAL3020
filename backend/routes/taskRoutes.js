@@ -24,18 +24,30 @@ router.get("/", protect, async (req, res) => {
     const Project = (await import("../models/projectModel.js")).default;
 
     if (projectId) {
-      const project = await Project.findById(projectId).select("team createdBy");
-      if (!project) return res.status(404).json({ message: "Project not found" });
+      const project = await Project.findById(projectId).select(
+        "team createdBy"
+      );
+      if (!project)
+        return res.status(404).json({ message: "Project not found" });
       if (!project.team.includes(userId) && !project.createdBy.equals(userId))
         return res.status(403).json({ message: "Forbidden" });
 
-      const tasks = await Task.find({ projectId }).populate("assignedTo", "name");
+      const tasks = await Task.find({ projectId }).populate({
+        path: "assignedTo",
+        select: "name",
+        strictPopulate: false, // <-- add this
+      });
       return res.json(tasks);
     }
 
-    const projects = await Project.find({ $or: [{ team: userId }, { createdBy: userId }] }).select("_id");
+    const projects = await Project.find({
+      $or: [{ team: userId }, { createdBy: userId }],
+    }).select("_id");
     const projectIds = projects.map((p) => p._id);
-    const tasks = await Task.find({ projectId: { $in: projectIds } }).populate("assignedTo", "name");
+    const tasks = await Task.find({ projectId: { $in: projectIds } }).populate(
+      "assignedTo",
+      "name"
+    );
     res.json(tasks);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -45,12 +57,20 @@ router.get("/", protect, async (req, res) => {
 // GET /api/tasks/:id - single task, requires access to project
 router.get("/:id", protect, async (req, res) => {
   try {
-    const task = await Task.findById(req.params.id).populate("assignedTo", "name projectId");
+    const task = await Task.findById(req.params.id).populate(
+      "assignedTo",
+      "name projectId"
+    );
     if (!task) return res.status(404).json({ message: "Task not found" });
 
     const Project = (await import("../models/projectModel.js")).default;
-    const project = await Project.findById(task.projectId).select("team createdBy");
-    if (!project.team.includes(req.user._id) && !project.createdBy.equals(req.user._id))
+    const project = await Project.findById(task.projectId).select(
+      "team createdBy"
+    );
+    if (
+      !project.team.includes(req.user._id) &&
+      !project.createdBy.equals(req.user._id)
+    )
       return res.status(403).json({ message: "Forbidden" });
 
     res.json(task);
@@ -63,15 +83,22 @@ router.get("/:id", protect, async (req, res) => {
 router.post("/", protect, async (req, res) => {
   try {
     const { projectId } = req.body;
-    if (!projectId) return res.status(400).json({ message: "projectId is required" });
+    if (!projectId)
+      return res.status(400).json({ message: "projectId is required" });
 
     const Project = (await import("../models/projectModel.js")).default;
     const project = await Project.findById(projectId).select("team createdBy");
     if (!project) return res.status(404).json({ message: "Project not found" });
-    if (!project.team.includes(req.user._id) && !project.createdBy.equals(req.user._id))
+    if (
+      !project.team.includes(req.user._id) &&
+      !project.createdBy.equals(req.user._id)
+    )
       return res.status(403).json({ message: "Forbidden" });
 
-    const task = await new Task({ ...req.body, createdBy: req.user._id }).save();
+    const task = await new Task({
+      ...req.body,
+      createdBy: req.user._id,
+    }).save();
     res.status(201).json(task);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -85,12 +112,19 @@ const modifyTask = async (req, res, action) => {
     if (!task) return res.status(404).json({ message: "Task not found" });
 
     const Project = (await import("../models/projectModel.js")).default;
-    const project = await Project.findById(task.projectId).select("team createdBy");
-    if (!project.team.includes(req.user._id) && !project.createdBy.equals(req.user._id))
+    const project = await Project.findById(task.projectId).select(
+      "team createdBy"
+    );
+    if (
+      !project.team.includes(req.user._id) &&
+      !project.createdBy.equals(req.user._id)
+    )
       return res.status(403).json({ message: "Forbidden" });
 
     if (action === "update") {
-      const updated = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      const updated = await Task.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      });
       return res.json(updated);
     }
 
@@ -102,6 +136,8 @@ const modifyTask = async (req, res, action) => {
 };
 
 router.put("/:id", protect, async (req, res) => modifyTask(req, res, "update"));
-router.delete("/:id", protect, async (req, res) => modifyTask(req, res, "delete"));
+router.delete("/:id", protect, async (req, res) =>
+  modifyTask(req, res, "delete")
+);
 
 export default router;
