@@ -1,25 +1,35 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import cors from 'cors';
-import dotenv from 'dotenv';
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import dotenv from "dotenv";
+
+import userRoutes from "./routes/userRoutes.js";
+import projectRoutes from "./routes/projectRoutes.js";
+import taskRoutes from "./routes/taskRoutes.js";
+import commentRoutes from "./routes/commentRoutes.js";
+import authRoutes from "./routes/authRoutes.js"; 
+import { protect } from "./middleware/auth.js";
 
 dotenv.config();
-
-import authRoutes from './routes/auth.js';
-import authMiddleware from './middleware/auth.js';
-
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI).then(() => console.log('MongoDB connected')).catch(err => console.error('MongoDB connection error'));
 
-app.use('/api/auth', authRoutes);
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.error("MongoDB Connection Error:", err));
 
-app.get('/api/protected', authMiddleware, (req, res) => {
-    res.json({ message: 'This is protected data', userId: req.userId});
-});
+// Routes
+app.use("/api/auth", authRoutes); 
+app.use("/api/users", userRoutes);
+app.use("/api/projects", projectRoutes);
+app.use("/api/tasks", taskRoutes);
+app.use("/api/comments", commentRoutes);
+
+app.get("/", (req, res) => res.send("API is running..."));
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on ${PORT}`))
+app.listen(PORT, "0.0.0.0", () => console.log(`Server running on port ${PORT}`));

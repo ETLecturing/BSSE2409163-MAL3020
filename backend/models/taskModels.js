@@ -1,0 +1,18 @@
+import mongoose from "mongoose";
+
+const taskSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String },
+  status: { 
+    type: String, 
+    enum: ["Pending", "Ongoing", "Completed"], 
+    default: "Pending" 
+  },
+  projectId: { type: mongoose.Schema.Types.ObjectId, ref: "Project" },
+  assignedTo: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  isPinnedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+}, { timestamps: true });
+
+export default mongoose.model("Task", taskSchema);
