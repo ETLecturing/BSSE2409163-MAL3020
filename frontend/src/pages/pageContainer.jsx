@@ -38,7 +38,7 @@ export default function PageContainer() {
       case "register":
         return <RegisterPage onRegisterSuccess={handleRegisterSuccess} />;
       case "dashboard":
-        return <Dashboard onLogout={handleLogout} />;
+        return <Dashboard token={token} onLogout={handleLogout} />;
       default:
         return <LoginPage onLoginSuccess={handleLoginSuccess} />;
     }
@@ -48,10 +48,16 @@ export default function PageContainer() {
     <div>
       {page !== "dashboard" && (
         <nav>
-          <button onClick={() => setPage("login")} className={page === "login" ? "active" : ""}>
+          <button
+            onClick={() => setPage("login")}
+            className={page === "login" ? "active" : ""}
+          >
             Login
           </button>
-          <button onClick={() => setPage("register")} className={page === "register" ? "active" : ""}>
+          <button
+            onClick={() => setPage("register")}
+            className={page === "register" ? "active" : ""}
+          >
             Register
           </button>
         </nav>

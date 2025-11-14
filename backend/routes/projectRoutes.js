@@ -1,55 +1,91 @@
 import express from "express";
 import Project from "../models/projectModel.js";
+import { protect } from "../middleware/auth.js";
+import { checkProjectAccess } from "../middleware/authorize.js";
 
 const router = express.Router();
 
-// Get all projects
-router.get("/", async (req, res) => {
+// GET /api/projects - projects user is part of or created
+router.get("/", protect, async (req, res) => {
   try {
-    const projects = await Project.find().populate("team", "name");
+    const projects = await Project.find({
+      $or: [{ team: req.user._id }, { createdBy: req.user._id }],
+    }).populate("team", "name");
     res.json(projects);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// Get one project
-router.get("/:id", async (req, res) => {
+// GET /api/projects/pinned - user's pinned projects
+router.get("/pinned", protect, async (req, res) => {
+  try {
+    const User = (await import("../models/userModel.js")).default;
+    const user = await User.findById(req.user._id).populate("pinnedProjects");
+    res.json(user?.pinnedProjects || []);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error fetching pinned projects" });
+  }
+});
+
+// GET /api/projects/:id - project detail (requires access)
+router.get("/:id", protect, checkProjectAccess, async (req, res) => {
   try {
     const project = await Project.findById(req.params.id).populate("team", "name");
-    if (!project) return res.status(404).json({ message: "Project not found" });
     res.json(project);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// Create project
-router.post("/", async (req, res) => {
+// POST /api/projects - create project (creator auto-added to team)
+router.post("/", protect, async (req, res) => {
   try {
-    const project = new Project(req.body);
-    await project.save();
+    const payload = {
+      ...req.body,
+      createdBy: req.user._id,
+      team: req.body.team ? [...new Set([...req.body.team, req.user._id])] : [req.user._id],
+    };
+    const project = await new Project(payload).save();
     res.status(201).json(project);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
 
-// Update project
-router.put("/:id", async (req, res) => {
+// PUT /api/projects/:id - update project (requires access)
+router.put("/:id", protect, checkProjectAccess, async (req, res) => {
   try {
-    const project = await Project.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updates = { ...req.body };
+    delete updates.createdBy;
+
+    const project = await Project.findByIdAndUpdate(req.params.id, updates, { new: true }).populate("team", "name");
     res.json(project);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
 
-// Delete project
-router.delete("/:id", async (req, res) => {
+// DELETE /api/projects/:id - only creator can delete
+router.delete("/:id", protect, checkProjectAccess, async (req, res) => {
   try {
+    if (!req.project.createdBy.equals(req.user._id))
+      return res.status(403).json({ message: "Only project creator can delete this project" });
+
     await Project.findByIdAndDelete(req.params.id);
     res.json({ message: "Project deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/projects/:id/tasks - tasks for project (requires access)
+router.get("/:id/tasks", protect, checkProjectAccess, async (req, res) => {
+  try {
+    const Task = (await import("../models/taskModels.js")).default;
+    const tasks = await Task.find({ projectId: req.params.id }).populate("assignedTo", "name");
+    res.json(tasks);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
