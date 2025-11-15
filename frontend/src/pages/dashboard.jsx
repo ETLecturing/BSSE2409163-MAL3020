@@ -1,85 +1,106 @@
 import { useState } from "react";
 import ProjectCard from "../components/projectCard";
-import KanbanBoard from "../components/kanbanBoard";
 import ProjectModal from "../components/addProjectPopup";
-import AddButton from "../components/addButton";
-import { createProject, fetchProjects, fetchPinnedProjects } from "../api/project";
+import { createProject, updateProject, deleteProject } from "../api/project";
 
 export default function Dashboard({
   token,
   openProjectTasks,
   allProjects,
-  setAllProjects,       // <-- new prop
+  setAllProjects,
   pinnedProjects,
-  setPinnedProjects,    // <-- new prop
+  setPinnedProjects,
   pinnedTasks,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingProject, setEditingProject] = useState(null); // null = create, object = edit
 
-  // handle modal submit
-  const handleCreateProject = async ({ name, description }) => {
+  const handleSubmit = async ({ name, description }) => {
     try {
-      const newProject = await createProject(token, { name, description });
-
-      // refresh sidebar/project lists
-      const updatedAll = await fetchProjects(token);
-      const updatedPinned = await fetchPinnedProjects(token);
-      setAllProjects(updatedAll);
-      setPinnedProjects(updatedPinned);
-
-      openProjectTasks(newProject); // open new project Kanban
-      setIsModalOpen(false);        // close modal
+      if (editingProject) {
+        // Update existing
+        const updated = await updateProject(token, editingProject._id, { name, description });
+        setAllProjects(allProjects.map(p => (p._id === updated._id ? updated : p)));
+        setPinnedProjects(pinnedProjects.map(p => (p._id === updated._id ? updated : p)));
+      } else {
+        // Create new
+        const newProject = await createProject(token, { name, description });
+        setAllProjects([newProject, ...allProjects]);
+      }
+      setIsModalOpen(false);
+      setEditingProject(null);
     } catch (err) {
       console.error(err);
-      alert("Failed to create project");
+      alert("Failed to save project");
+    }
+  };
+
+  const handleEdit = (project) => {
+    if (!project) return;
+    setEditingProject(project);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async (project) => {
+    if (!project) return;
+    if (!confirm(`Delete project "${project.name}"?`)) return;
+    try {
+      await deleteProject(token, project._id);
+      setAllProjects(allProjects.filter(p => p._id !== project._id));
+      setPinnedProjects(pinnedProjects.filter(p => p._id !== project._id));
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete project");
     }
   };
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
-        <main style={{ flex: 1, padding: "1rem", overflowY: "auto" }}>
-          {/* Pinned Projects */}
-          {pinnedProjects.length > 0 && (
-            <div style={{ marginBottom: "1rem" }}>
-              <h2>Pinned Projects</h2>
-              <div style={{ display: "flex", flexWrap: "wrap" }}>
-                {pinnedProjects.map((proj) => (
-                  <ProjectCard
-                    key={proj._id}
-                    project={proj}
-                    onClick={openProjectTasks}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
+        <main
+  style={{
+    flex: 1,
+    padding: "1rem",
+    overflowY: "auto",
+    display: "flex",
+    flexWrap: "wrap",       // allow items to wrap to next line
+    gap: "1rem",            // spacing between cards
+    justifyContent: "flex-start", // align cards from left
+  }}
+>
+  {allProjects.length > 0 && allProjects.map(proj => (
+    <ProjectCard
+      key={proj._id}
+      project={proj}
+      onClick={openProjectTasks}
+      onEdit={handleEdit}
+      onDelete={handleDelete}
+    />
+  ))}
 
-          {/* All Projects */}
-          {allProjects.length > 0 ? (
-            <div style={{ display: "flex", flexWrap: "wrap" }}>
-              {allProjects.map((proj) => (
-                <ProjectCard
-                  key={proj._id}
-                  project={proj}
-                  onClick={openProjectTasks}
-                />
-              ))}
-            </div>
-          ) : (
-            <p style={{ fontStyle: "italic", color: "#888" }}>
-              No projects available
-            </p>
-          )}
+  <button
+    onClick={() => { setEditingProject(null); setIsModalOpen(true); }}
+    style={{
+      width: "250px",
+      height: "180px",
+      margin: "0.5rem",
+      border: "1px dashed #aaa",
+      borderRadius: "12px",
+      backgroundColor: "#fff",
+      cursor: "pointer",
+    }}
+  >
+    + Add Project
+  </button>
 
-          {/* Add Project Button & Modal */}
-          <AddButton onClick={() => setIsModalOpen(true)} />
-          <ProjectModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            onSubmit={handleCreateProject}
-          />
-        </main>
+  <ProjectModal
+    isOpen={isModalOpen}
+    onClose={() => setIsModalOpen(false)}
+    onSubmit={handleSubmit}
+    project={editingProject}
+  />
+</main>
+
       </div>
     </div>
   );

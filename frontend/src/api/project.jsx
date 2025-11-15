@@ -88,3 +88,40 @@ export const createProject = async (token, { name, description = "", team = [] }
 
   return res.json(); // returns the created project object
 };
+
+// project.js
+export const deleteProject = async (token, projectId) => {
+  const res = await fetch(`http://localhost:5000/api/projects/${projectId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    const errData = await res.json();
+    throw new Error(errData.error || "Failed to delete project");
+  }
+
+  return res.json(); // optional: can return deleted project info
+};
+
+
+export const updateProject = async (token, projectId, data) => {
+  const res = await fetch(`http://localhost:5000/api/projects/${projectId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const errData = await res.json();
+    throw new Error(errData.error || "Failed to update project");
+  }
+
+  return res.json(); // returns updated project object
+};
