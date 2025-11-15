@@ -69,44 +69,42 @@ export default function PageContainer() {
   };
 
   // open Kanban for project
-const openProjectTasks = async (project) => {
-  if (!project) {
-    // going back to dashboard
+  const openProjectTasks = async (project) => {
+    if (!project) {
+      // going back to dashboard
+      setActiveProject(null);
+      setProjectTasks([]);
+      setPage("dashboard");
+      return;
+    }
+
+    // Step 1: Reset to dashboard first
     setActiveProject(null);
     setProjectTasks([]);
     setPage("dashboard");
-    return;
-  }
 
-  // Step 1: Reset to dashboard first
-  setActiveProject(null);
-  setProjectTasks([]);
-  setPage("dashboard");
+    // Step 2: small delay to ensure state updates, then open new project
+    setTimeout(async () => {
+      setActiveProject(project);
+      await loadProjectTasks(project._id);
+      setPage("kanban");
+    }, 50); // 50ms is enough for React to register the previous state
+  };
 
-  // Step 2: small delay to ensure state updates, then open new project
-  setTimeout(async () => {
-    setActiveProject(project);
-    await loadProjectTasks(project._id);
-    setPage("kanban");
-  }, 50); // 50ms is enough for React to register the previous state
-};
+  const handleAddProject = async () => {
+    const { createProject } = await import("../api/project");
+    const newProject = await createProject(token, {
+      name: "New Project",
+      description: "",
+      team: [],
+    });
 
-const handleAddProject = async () => {
-  const { createProject } = await import("../api/project");
-  const newProject = await createProject(token, {
-    name: "New Project",
-    description: "",
-    team: [],
-  });
+    // Refresh sidebar data
+    loadSidebarData(token);
 
-  // Refresh sidebar data
-  loadSidebarData(token);
-
-  // Optionally open it immediately
-  openProjectTasks(newProject);
-};
-
-
+    // Optionally open it immediately
+    openProjectTasks(newProject);
+  };
 
   const renderPage = () => {
     switch (page) {
@@ -120,7 +118,9 @@ const handleAddProject = async () => {
             token={token}
             openProjectTasks={openProjectTasks}
             allProjects={allProjects}
+            setAllProjects={setAllProjects} // pass setter
             pinnedProjects={pinnedProjects}
+            setPinnedProjects={setPinnedProjects} // pass setter
             pinnedTasks={pinnedTasks}
           />
         );
@@ -143,52 +143,46 @@ const handleAddProject = async () => {
   };
 
   return (
-  <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
-
-    {/* Navbar always visible when logged in */}
-    {(page === "dashboard" || page === "kanban") && (
-      <DashboardNavbar username={username} onLogout={handleLogout} />
-    )}
-
-    {/* Login/Register navigation */}
-    {page !== "dashboard" && page !== "kanban" && (
-      <nav style={{ padding: "1rem", borderBottom: "1px solid #ccc" }}>
-        <button
-          onClick={() => setPage("login")}
-          className={page === "login" ? "active" : ""}
-          style={{ marginRight: "1rem" }}
-        >
-          Login
-        </button>
-        <button
-          onClick={() => setPage("register")}
-          className={page === "register" ? "active" : ""}
-        >
-          Register
-        </button>
-      </nav>
-    )}
-
-    {/* Main content area BELOW navbar */}
-    <div style={{ flex: 1, display: "flex", height: "100%" }}>
-      
-      {/* Sidebar only on dashboard or kanban */}
+    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+      {/* Navbar always visible when logged in */}
       {(page === "dashboard" || page === "kanban") && (
-        <DashboardSidebar
-          allProjects={allProjects}
-          pinnedProjects={pinnedProjects}
-          pinnedTasks={pinnedTasks}
-          onProjectClick={openProjectTasks}
-        />
+        <DashboardNavbar username={username} onLogout={handleLogout} />
       )}
 
-      {/* Right side content */}
-      <div style={{ flex: 1, overflow: "auto" }}>
-        {renderPage()}
+      {/* Login/Register navigation */}
+      {page !== "dashboard" && page !== "kanban" && (
+        <nav style={{ padding: "1rem", borderBottom: "1px solid #ccc" }}>
+          <button
+            onClick={() => setPage("login")}
+            className={page === "login" ? "active" : ""}
+            style={{ marginRight: "1rem" }}
+          >
+            Login
+          </button>
+          <button
+            onClick={() => setPage("register")}
+            className={page === "register" ? "active" : ""}
+          >
+            Register
+          </button>
+        </nav>
+      )}
+
+      {/* Main content area BELOW navbar */}
+      <div style={{ flex: 1, display: "flex", height: "100%" }}>
+        {/* Sidebar only on dashboard or kanban */}
+        {(page === "dashboard" || page === "kanban") && (
+          <DashboardSidebar
+            allProjects={allProjects}
+            pinnedProjects={pinnedProjects}
+            pinnedTasks={pinnedTasks}
+            onProjectClick={openProjectTasks}
+          />
+        )}
+
+        {/* Right side content */}
+        <div style={{ flex: 1, overflow: "auto" }}>{renderPage()}</div>
       </div>
-
     </div>
-  </div>
-);
-
+  );
 }
