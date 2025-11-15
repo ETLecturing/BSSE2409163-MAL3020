@@ -7,12 +7,29 @@ export default function DashboardSidebar({ allProjects, pinnedProjects, pinnedTa
           {items.map((item) => (
             <li
               key={item._id}
-              onClick={() => !isTask && onProjectClick(item)} // tasks can be non-clickable or handle differently
+              onClick={() => !isTask && onProjectClick(item)}
               style={{
                 cursor: !isTask ? "pointer" : "default",
-                padding: "0.3rem 0",
+                padding: "0.3rem 0.5rem",
                 color: !isTask ? "#007bff" : "#555",
                 textDecoration: !isTask ? "underline" : "none",
+                borderRadius: "4px",
+                marginBottom: "2px",
+                transition: "background-color 0.2s, transform 0.1s",
+              }}
+              onMouseEnter={(e) => {
+                if (!isTask) e.currentTarget.style.backgroundColor = "#f0f8ff";
+                e.currentTarget.style.transform = "translateX(3px)";
+              }}
+              onMouseLeave={(e) => {
+                if (!isTask) e.currentTarget.style.backgroundColor = "transparent";
+                e.currentTarget.style.transform = "translateX(0)";
+              }}
+              onMouseDown={(e) => {
+                if (!isTask) e.currentTarget.style.backgroundColor = "#d0e8ff";
+              }}
+              onMouseUp={(e) => {
+                if (!isTask) e.currentTarget.style.backgroundColor = "#f0f8ff";
               }}
             >
               {item.name}
@@ -35,7 +52,7 @@ export default function DashboardSidebar({ allProjects, pinnedProjects, pinnedTa
     >
       {renderList("Pinned Projects", pinnedProjects)}
       {renderList("All Projects", allProjects)}
-      {renderList("Pinned Tasks", pinnedTasks, true)} {/* tasks non-clickable */}
+      {renderList("Pinned Tasks", pinnedTasks, true)}
     </aside>
   );
 }

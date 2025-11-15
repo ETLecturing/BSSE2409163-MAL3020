@@ -70,3 +70,21 @@ export async function fetchProjectTasks(projectId, token) {
     return [];
   }
 }
+
+export const createProject = async (token, { name, description = "", team = [] }) => {
+  const res = await fetch("http://localhost:5000/api/projects", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ name, description, team }),
+  });
+
+  if (!res.ok) {
+    const errData = await res.json().catch(() => ({}));
+    throw new Error(errData.error || "Failed to create project");
+  }
+
+  return res.json(); // returns the created project object
+};

@@ -1,79 +1,74 @@
 import { useState, useEffect } from "react";
-import DashboardNavbar from "../components/navbar"; // new navbar
 import ProjectCard from "../components/projectCard";
 import KanbanBoard from "../components/kanbanBoard";
 import { fetchProjectTasks } from "../api/project";
+import ProjectModal from "../components/addProjectPopup";
+import AddButton from "../components/addButton";
+import { createProject } from "../api/project";
 
 export default function Dashboard({
   token,
-  onLogout,
-  activeProjectId,
   openProjectTasks,
   allProjects,
   pinnedProjects,
   pinnedTasks,
-  username // pass username from PageContainer
 }) {
-  const [projectTasks, setProjectTasks] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    if (!activeProjectId) return;
-    async function loadTasks() {
-      setProjectTasks(await fetchProjectTasks(activeProjectId, token));
+  // handle modal submit
+  const handleCreateProject = async ({ name, description }) => {
+    try {
+      const newProject = await createProject(token, { name, description });
+      openProjectTasks(newProject); // open new project
+      setIsModalOpen(false); // close modal
+    } catch (err) {
+      console.error(err);
+      alert("Failed to create project");
     }
-    loadTasks();
-  }, [activeProjectId, token]);
+  };
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-      {/* Use new navbar with username and logout */}
       <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
-        {/* Main content */}
         <main style={{ flex: 1, padding: "1rem", overflowY: "auto" }}>
-          {activeProjectId ? (
-            <div>
-              <button
-                onClick={() => openProjectTasks(null)}
-                style={{ marginBottom: "1rem" }}
-              >
-                ← Back to Dashboard
-              </button>
-              <KanbanBoard tasks={projectTasks} />
-            </div>
-          ) : (
-            <>
-              {/* Pinned Projects */}
-              {pinnedProjects.length > 0 && (
-                <div style={{ marginBottom: "1rem" }}>
-                  <h2>Pinned Projects</h2>
-                  <div style={{ display: "flex", flexWrap: "wrap" }}>
-                    {pinnedProjects.map((proj) => (
-                      <ProjectCard
-                        key={proj._id}
-                        project={proj}
-                        onClick={() => openProjectTasks(proj._id)}
-                      />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* All Projects */}
-              {allProjects.length > 0 ? (
+          <>
+            {pinnedProjects.length > 0 && (
+              <div style={{ marginBottom: "1rem" }}>
+                <h2>Pinned Projects</h2>
                 <div style={{ display: "flex", flexWrap: "wrap" }}>
-                  {allProjects.map((proj) => (
+                  {pinnedProjects.map((proj) => (
                     <ProjectCard
                       key={proj._id}
                       project={proj}
-                      onClick={() => openProjectTasks(proj._id)}
+                      onClick={openProjectTasks}
                     />
                   ))}
                 </div>
-              ) : (
-                <p style={{ fontStyle: "italic", color: "#888" }}>No projects available</p>
-              )}
-            </>
-          )}
+              </div>
+            )}
+
+            {allProjects.length > 0 ? (
+              <div style={{ display: "flex", flexWrap: "wrap" }}>
+                {allProjects.map((proj) => (
+                  <ProjectCard
+                    key={proj._id}
+                    project={proj}
+                    onClick={openProjectTasks}
+                  />
+                ))}
+              </div>
+            ) : (
+              <p style={{ fontStyle: "italic", color: "#888" }}>
+                No projects available
+              </p>
+            )}
+          </>
+          <AddButton onClick={() => setIsModalOpen(true)} />
+          <ProjectModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onSubmit={handleCreateProject}
+          />
         </main>
       </div>
     </div>
