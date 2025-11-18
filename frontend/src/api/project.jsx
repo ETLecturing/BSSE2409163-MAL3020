@@ -125,3 +125,19 @@ export const updateProject = async (token, projectId, data) => {
 
   return res.json(); // returns updated project object
 };
+
+
+export async function updateProjectTeam(projectId, team) {
+  try {
+    const res = await fetch(`/api/projects/${projectId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ team }),
+    });
+    if (!res.ok) throw new Error("Failed to update project team");
+    return await res.json();
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+}

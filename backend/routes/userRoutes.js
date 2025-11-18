@@ -13,6 +13,22 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/search", async (req, res) => {
+  const { username } = req.query;
+  if (!username) return res.status(400).json({ msg: "Username query required" });
+
+  try {
+    const regex = new RegExp(username, "i"); // case-insensitive
+    const users = await User.find({ username: regex })
+      .limit(10)
+      .select("_id username email");
+    res.json(users);
+  } catch (err) {
+    console.error("User search error:", err);
+    res.status(500).json({ msg: "Server error" });
+  }
+});
+
 // Get one user
 router.get("/:id", async (req, res) => {
   try {
@@ -54,5 +70,7 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+
 
 export default router;

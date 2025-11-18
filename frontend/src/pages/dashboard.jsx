@@ -12,19 +12,20 @@ export default function Dashboard({
   setAllProjects,
   pinnedProjects,
   setPinnedProjects,
-  pinnedTasks,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProject, setEditingProject] = useState(null);
 
-  const handleSubmit = async ({ name, description }) => {
+  const handleSubmit = async ({ name, description, team }) => {
     try {
       if (editingProject) {
-        // Update existing
+        // Update existing project
         const updated = await updateProject(token, editingProject._id, {
           name,
           description,
+          team,
         });
+
         setAllProjects(
           allProjects.map((p) => (p._id === updated._id ? updated : p))
         );
@@ -32,10 +33,15 @@ export default function Dashboard({
           pinnedProjects.map((p) => (p._id === updated._id ? updated : p))
         );
       } else {
-        // Create new
-        const newProject = await createProject(token, { name, description });
+        // Create new project
+        const newProject = await createProject(token, {
+          name,
+          description,
+          team,
+        });
         setAllProjects([newProject, ...allProjects]);
       }
+
       setIsModalOpen(false);
       setEditingProject(null);
     } catch (err) {
@@ -69,7 +75,7 @@ export default function Dashboard({
       return;
     }
     try {
-      const updatedUser = await pinProject(userId, project._id, token);
+      await pinProject(userId, project._id, token);
       setPinnedProjects([...pinnedProjects, project]);
       setAllProjects(
         allProjects.map((p) =>
@@ -88,7 +94,7 @@ export default function Dashboard({
       return;
     }
     try {
-      const updatedUser = await unpinProject(userId, project._id, token);
+      await unpinProject(userId, project._id, token);
       setPinnedProjects(pinnedProjects.filter((p) => p._id !== project._id));
       setAllProjects(
         allProjects.map((p) =>
@@ -110,24 +116,23 @@ export default function Dashboard({
             padding: "1rem",
             overflowY: "auto",
             display: "flex",
-            flexWrap: "wrap", // allow items to wrap to next line
-            gap: "1rem", // spacing between cards
-            justifyContent: "flex-start", // align cards from left
+            flexWrap: "wrap",
+            gap: "1rem",
+            justifyContent: "flex-start",
           }}
         >
-          {allProjects.length > 0 &&
-            allProjects.map((proj) => (
-              <ProjectCard
-                key={proj._id}
-                project={proj}
-                pinnedProjects={pinnedProjects} // <-- add this
-                onClick={openProjectTasks}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-                onPin={handlePin}
-                onUnpin={handleUnpin}
-              />
-            ))}
+          {allProjects.map((proj) => (
+            <ProjectCard
+              key={proj._id}
+              project={proj}
+              pinnedProjects={pinnedProjects}
+              onClick={openProjectTasks}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onPin={handlePin}
+              onUnpin={handleUnpin}
+            />
+          ))}
 
           <button
             onClick={() => {
