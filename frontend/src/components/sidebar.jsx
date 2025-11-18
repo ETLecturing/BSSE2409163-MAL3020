@@ -1,35 +1,38 @@
-export default function DashboardSidebar({ allProjects, pinnedProjects, pinnedTasks, onProjectClick }) {
-  const renderList = (title, items, isTask = false) => (
-    <div style={{ marginBottom: "1.5rem" }}>
-      <h3>{title}</h3>
+export default function DashboardSidebar({ allProjects, pinnedProjects, onProjectClick }) {
+  const renderList = (title, items) => (
+    <div style={{ marginBottom: "1.25rem" }}>
+      <h3 style={{ margin: "0 0 0.5rem 0", fontSize: "0.95rem", color: "#444", letterSpacing: "0.5px" }}>
+        {title}
+      </h3>
       {items.length ? (
-        <ul style={{ listStyle: "none", padding: 0 }}>
+        <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
           {items.map((item) => (
             <li
               key={item._id}
-              onClick={() => !isTask && onProjectClick(item)}
+              onClick={() => onProjectClick(item)}
               style={{
-                cursor: !isTask ? "pointer" : "default",
-                padding: "0.3rem 0.5rem",
-                color: !isTask ? "#007bff" : "#555",
-                textDecoration: !isTask ? "underline" : "none",
-                borderRadius: "4px",
-                marginBottom: "2px",
-                transition: "background-color 0.2s, transform 0.1s",
+                cursor: "pointer",
+                padding: "0.35rem 0.6rem",
+                color: "#007bff",
+                textDecoration: "none",
+                borderRadius: "6px",
+                marginBottom: "3px",
+                fontSize: "0.9rem",
+                transition: "all 0.15s ease",
               }}
               onMouseEnter={(e) => {
-                if (!isTask) e.currentTarget.style.backgroundColor = "#f0f8ff";
-                e.currentTarget.style.transform = "translateX(3px)";
+                e.currentTarget.style.backgroundColor = "#e6f2ff";
+                e.currentTarget.style.transform = "translateX(2px)";
               }}
               onMouseLeave={(e) => {
-                if (!isTask) e.currentTarget.style.backgroundColor = "transparent";
+                e.currentTarget.style.backgroundColor = "transparent";
                 e.currentTarget.style.transform = "translateX(0)";
               }}
               onMouseDown={(e) => {
-                if (!isTask) e.currentTarget.style.backgroundColor = "#d0e8ff";
+                e.currentTarget.style.backgroundColor = "#cce0ff";
               }}
               onMouseUp={(e) => {
-                if (!isTask) e.currentTarget.style.backgroundColor = "#f0f8ff";
+                e.currentTarget.style.backgroundColor = "#e6f2ff";
               }}
             >
               {item.name}
@@ -37,7 +40,9 @@ export default function DashboardSidebar({ allProjects, pinnedProjects, pinnedTa
           ))}
         </ul>
       ) : (
-        <p style={{ fontStyle: "italic", color: "#888" }}>No {title.toLowerCase()}</p>
+        <p style={{ fontStyle: "italic", color: "#888", fontSize: "0.85rem" }}>
+          No {title.toLowerCase()}
+        </p>
       )}
     </div>
   );
@@ -47,12 +52,15 @@ export default function DashboardSidebar({ allProjects, pinnedProjects, pinnedTa
       style={{
         width: "220px",
         padding: "1rem",
-        borderRight: "1px solid #ccc",
+        borderRight: "1px solid #ddd",
+        backgroundColor: "#fafafa",
+        display: "flex",
+        flexDirection: "column",
+        overflowY: "auto",
       }}
     >
       {renderList("Pinned Projects", pinnedProjects)}
       {renderList("All Projects", allProjects)}
-      {renderList("Pinned Tasks", pinnedTasks, true)}
     </aside>
   );
 }
