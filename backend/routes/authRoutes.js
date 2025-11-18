@@ -15,18 +15,19 @@ const generateToken = (id) => {
 // Register
 router.post("/register", async (req, res) => {
   try {
-    const { username, password } = req.body;
-    if ( !username || !password) {
+    const { name, username, password } = req.body;
+    if (!name || !username || !password) {
       return res.status(400).json({ message: "All fields required" });
     }
 
     const userExists = await User.findOne({ username });
     if (userExists) return res.status(400).json({ message: "Username taken" });
 
-    const user = await User.create({ username, password });
+    const user = await User.create({ name, username, password });
 
     res.status(201).json({
       _id: user._id,
+      name: user.name,
       username: user.username,
       token: generateToken(user._id),
     });
@@ -34,6 +35,7 @@ router.post("/register", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 // Login
 router.post("/login", async (req, res) => {

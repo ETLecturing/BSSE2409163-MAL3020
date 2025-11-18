@@ -20,16 +20,18 @@ export async function login(username, password) {
 
 
 
-export async function register(username, password) {
+export async function register({ name, username, password }) {
   try {
     const res = await fetch("http://localhost:5000/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ name, username, password }),
     });
+
     return await res.json();
   } catch (err) {
     console.error("Register error:", err);
     return { success: false, message: "Network error" };
   }
 }
+
