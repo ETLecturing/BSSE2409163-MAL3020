@@ -80,26 +80,53 @@ router.get("/:id", protect, async (req, res) => {
 });
 
 // POST /api/tasks - create task, requires project access
+// POST /api/tasks
 router.post("/", protect, async (req, res) => {
   try {
-    const { projectId } = req.body;
-    if (!projectId)
-      return res.status(400).json({ message: "projectId is required" });
+    const { projectId, title, description, status, assignedTo } = req.body;
+    if (!projectId) return res.status(400).json({ message: "projectId is required" });
 
     const Project = (await import("../models/projectModel.js")).default;
     const project = await Project.findById(projectId).select("team createdBy");
     if (!project) return res.status(404).json({ message: "Project not found" });
-    if (
-      !project.team.includes(req.user._id) &&
-      !project.createdBy.equals(req.user._id)
-    )
+    if (!project.team.includes(req.user._id) && !project.createdBy.equals(req.user._id))
       return res.status(403).json({ message: "Forbidden" });
 
     const task = await new Task({
-      ...req.body,
+      title,
+      description,
+      status,
+      assignedTo: assignedTo || [], // <-- store assigned users
+      projectId,
       createdBy: req.user._id,
     }).save();
+
     res.status(201).json(task);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// PUT /api/tasks/:id
+router.put("/:id", protect, async (req, res) => {
+  try {
+    const task = await Task.findById(req.params.id);
+    if (!task) return res.status(404).json({ message: "Task not found" });
+
+    const Project = (await import("../models/projectModel.js")).default;
+    const project = await Project.findById(task.projectId).select("team createdBy");
+    if (!project.team.includes(req.user._id) && !project.createdBy.equals(req.user._id))
+      return res.status(403).json({ message: "Forbidden" });
+
+    // Update fields including assignedTo
+    const { title, description, status, assignedTo } = req.body;
+    task.title = title ?? task.title;
+    task.description = description ?? task.description;
+    task.status = status ?? task.status;
+    task.assignedTo = assignedTo ?? task.assignedTo;
+
+    const updatedTask = await task.save();
+    res.json(updatedTask);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -135,7 +162,7 @@ const modifyTask = async (req, res, action) => {
   }
 };
 
-router.put("/:id", protect, async (req, res) => modifyTask(req, res, "update"));
+
 router.delete("/:id", protect, async (req, res) =>
   modifyTask(req, res, "delete")
 );
