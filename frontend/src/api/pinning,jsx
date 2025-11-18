@@ -1,16 +1,23 @@
-// src/api/pinning.js
-export async function pinProject(projectId, token) {
-  const res = await fetch(`http://localhost:5000/api/projects/${projectId}/pin`, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${token}` },
+// pinProject adds a project to the user's pinnedProjects array
+export async function pinProject(userId, projectId, token) {
+  return fetch(`http://localhost:5000/api/users/${userId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ $push: { pinnedProjects: projectId } }),
   });
-  return res.json();
 }
 
-export async function unpinProject(projectId, token) {
-  const res = await fetch(`http://localhost:5000/api/projects/${projectId}/unpin`, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${token}` },
+// unpinProject removes a project from the user's pinnedProjects array
+export async function unpinProject(userId, projectId, token) {
+  return fetch(`http://localhost:5000/api/users/${userId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ $pull: { pinnedProjects: projectId } }),
   });
-  return res.json();
 }

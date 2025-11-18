@@ -4,31 +4,39 @@ import RegisterPage from "./register";
 import Dashboard from "./dashboard";
 import KanbanBoard from "../components/kanbanBoard";
 import DashboardSidebar from "../components/sidebar";
-import DashboardNavbar from "../components/navbar"; // consistent navbar
+import DashboardNavbar from "../components/navbar";
 
 export default function PageContainer() {
-  const [page, setPage] = useState("login"); // "login" | "register" | "dashboard" | "kanban"
+  const [page, setPage] = useState("login");
   const [token, setToken] = useState(null);
   const [username, setUsername] = useState("");
-  const [activeProject, setActiveProject] = useState(null); // object with id + name
+  const [userId, setUserId] = useState(null); // use decoded token
+  const [activeProject, setActiveProject] = useState(null);
   const [allProjects, setAllProjects] = useState([]);
   const [pinnedProjects, setPinnedProjects] = useState([]);
   const [pinnedTasks, setPinnedTasks] = useState([]);
   const [projectTasks, setProjectTasks] = useState([]);
 
-  // load saved token + username
-  useEffect(() => {
-    const savedToken = localStorage.getItem("token");
-    const savedUser = localStorage.getItem("username");
-    if (savedToken) {
-      setToken(savedToken);
-      if (savedUser) setUsername(savedUser);
-      setPage("dashboard");
-      loadSidebarData(savedToken);
-    }
-  }, []);
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+  const username = localStorage.getItem("username");
 
-  // fetch projects/tasks for sidebar
+  if (token && userId && username) {
+    setToken(token);
+    setUserId(userId);
+    setUsername(username);
+    setPage("dashboard");
+    loadSidebarData(token);
+  }
+
+  if (token) {
+    loadSidebarData(token)
+  }
+}, [token]);
+
+
+  // Fetch projects/tasks for sidebar
   const loadSidebarData = async (token) => {
     const { fetchProjects, fetchPinnedProjects, fetchPinnedTasks } =
       await import("../api/project");
@@ -37,58 +45,58 @@ export default function PageContainer() {
     setPinnedTasks(await fetchPinnedTasks(token));
   };
 
-  // fetch tasks for a project
+  // Fetch tasks for a project
   const loadProjectTasks = async (projectId) => {
     const { fetchProjectTasks } = await import("../api/project");
     const tasks = await fetchProjectTasks(projectId, token);
     setProjectTasks(tasks);
   };
 
-  // login
-  const handleLoginSuccess = (token, username) => {
-    localStorage.setItem("token", token);
-    localStorage.setItem("username", username);
+  const handleLoginSuccess = async (res) => {
+    // res = { _id, username, token }
+    console.log(res);
+    const { _id, username, token } = res;
+    
     setToken(token);
     setUsername(username);
+    setUserId(_id);
+
+    
+    await loadSidebarData(token);
     setPage("dashboard");
-    loadSidebarData(token);
   };
 
-  // register
   const handleRegisterSuccess = () => setPage("login");
 
-  // logout
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    setToken(null);
-    setUsername("");
-    setPage("login");
-    setActiveProject(null);
-    setProjectTasks([]);
-  };
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("username");
+  localStorage.removeItem("userId"); // match key used in login
+  setToken(null);
+  setUsername("");
+  setUserId(null);
+  setPage("login");
+  setActiveProject(null);
+  setProjectTasks([]);
+};
 
-  // open Kanban for project
   const openProjectTasks = async (project) => {
     if (!project) {
-      // going back to dashboard
       setActiveProject(null);
       setProjectTasks([]);
       setPage("dashboard");
       return;
     }
 
-    // Step 1: Reset to dashboard first
     setActiveProject(null);
     setProjectTasks([]);
     setPage("dashboard");
 
-    // Step 2: small delay to ensure state updates, then open new project
     setTimeout(async () => {
       setActiveProject(project);
       await loadProjectTasks(project._id);
       setPage("kanban");
-    }, 50); // 50ms is enough for React to register the previous state
+    }, 50);
   };
 
   const handleAddProject = async () => {
@@ -98,11 +106,7 @@ export default function PageContainer() {
       description: "",
       team: [],
     });
-
-    // Refresh sidebar data
     loadSidebarData(token);
-
-    // Optionally open it immediately
     openProjectTasks(newProject);
   };
 
@@ -116,14 +120,16 @@ export default function PageContainer() {
         return (
           <Dashboard
             token={token}
+            userId={userId}
             openProjectTasks={openProjectTasks}
             allProjects={allProjects}
-            setAllProjects={setAllProjects} // pass setter
+            setAllProjects={setAllProjects}
             pinnedProjects={pinnedProjects}
-            setPinnedProjects={setPinnedProjects} // pass setter
+            setPinnedProjects={setPinnedProjects}
             pinnedTasks={pinnedTasks}
           />
         );
+
       case "kanban":
         return (
           <div style={{ padding: "1rem" }}>
@@ -144,12 +150,10 @@ export default function PageContainer() {
 
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
-      {/* Navbar always visible when logged in */}
       {(page === "dashboard" || page === "kanban") && (
         <DashboardNavbar username={username} onLogout={handleLogout} />
       )}
 
-      {/* Login/Register navigation */}
       {page !== "dashboard" && page !== "kanban" && (
         <nav style={{ padding: "1rem", borderBottom: "1px solid #ccc" }}>
           <button
@@ -168,9 +172,7 @@ export default function PageContainer() {
         </nav>
       )}
 
-      {/* Main content area BELOW navbar */}
       <div style={{ flex: 1, display: "flex", height: "100%" }}>
-        {/* Sidebar only on dashboard or kanban */}
         {(page === "dashboard" || page === "kanban") && (
           <DashboardSidebar
             allProjects={allProjects}
@@ -180,7 +182,6 @@ export default function PageContainer() {
           />
         )}
 
-        {/* Right side content */}
         <div style={{ flex: 1, overflow: "auto" }}>{renderPage()}</div>
       </div>
     </div>
