@@ -17,24 +17,23 @@ export default function PageContainer() {
   const [pinnedTasks, setPinnedTasks] = useState([]);
   const [projectTasks, setProjectTasks] = useState([]);
 
-useEffect(() => {
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
-  const username = localStorage.getItem("username");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+    const username = localStorage.getItem("username");
 
-  if (token && userId && username) {
-    setToken(token);
-    setUserId(userId);
-    setUsername(username);
-    setPage("dashboard");
-    loadSidebarData(token);
-  }
+    if (token && userId && username) {
+      setToken(token);
+      setUserId(userId);
+      setUsername(username);
+      setPage("dashboard");
+      loadSidebarData(token);
+    }
 
-  if (token) {
-    loadSidebarData(token)
-  }
-}, [token]);
-
+    if (token) {
+      loadSidebarData(token);
+    }
+  }, [token]);
 
   // Fetch projects/tasks for sidebar
   const loadSidebarData = async (token) => {
@@ -56,29 +55,28 @@ useEffect(() => {
     // res = { _id, username, token }
     console.log(res);
     const { _id, username, token } = res;
-    
+
     setToken(token);
     setUsername(username);
     setUserId(_id);
 
-    
     await loadSidebarData(token);
     setPage("dashboard");
   };
 
   const handleRegisterSuccess = () => setPage("login");
 
-const handleLogout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("username");
-  localStorage.removeItem("userId"); // match key used in login
-  setToken(null);
-  setUsername("");
-  setUserId(null);
-  setPage("login");
-  setActiveProject(null);
-  setProjectTasks([]);
-};
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    localStorage.removeItem("userId"); // match key used in login
+    setToken(null);
+    setUsername("");
+    setUserId(null);
+    setPage("login");
+    setActiveProject(null);
+    setProjectTasks([]);
+  };
 
   const openProjectTasks = async (project) => {
     if (!project) {
@@ -140,9 +138,14 @@ const handleLogout = () => {
               ← Back to Dashboard
             </button>
             <h2>{activeProject?.name}</h2>
-            <KanbanBoard tasks={projectTasks} />
+            <KanbanBoard
+              projectId={activeProject?._id}
+              token={token}
+              team={activeProject?.team || []}
+            />
           </div>
         );
+
       default:
         return <LoginPage onLoginSuccess={handleLoginSuccess} />;
     }

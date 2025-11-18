@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ProjectCard from "../components/projectCard";
-import ProjectModal from "../components/addProjectPopup";
+import ProjectModal from "../components/projectModal";
 import { createProject, updateProject, deleteProject } from "../api/project";
 import { pinProject, unpinProject } from "../api/pinning,jsx";
 
