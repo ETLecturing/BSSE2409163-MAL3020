@@ -10,8 +10,13 @@ export default function TaskModal({ task, onClose, onSave, onDelete, team = [] }
     if (task) {
       setTitle(task.title);
       setDescription(task.description || "");
-      setStatus(task.status || "Pending");
-      setAssignedTo(task.assignedTo || []);
+      setStatus(task.status);
+      // If task.assignedTo is populated with user objects, map to their _id
+      setAssignedTo(
+        task.assignedTo
+          ? task.assignedTo.map(u => (typeof u === "object" ? u._id : u))
+          : []
+      );
     } else {
       setTitle("");
       setDescription("");

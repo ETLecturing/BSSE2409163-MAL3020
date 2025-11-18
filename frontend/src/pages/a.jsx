@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { fetchProjects, fetchPinnedProjects, fetchProjectTasks, fetchPinnedTasks } from "../api/project";
 import ProjectCard from "../components/projectCard";
-import KanbanBoard from "../components/kanbanBoard";
+import KanbanBoard from "./kanbanBoard";
 import DashboardNavbar from "../components/navbar";
 import DashboardSidebar from "../components/sidebar";
 

@@ -1,10 +1,19 @@
 import { useState, useEffect } from "react";
-import TaskModal from "./taskModal";
-import { fetchProjectTasks, createTask, updateTask, deleteTask } from "../api/task";
+import TaskModal from "../components/taskModal";
+import {
+  fetchProjectTasks,
+  createTask,
+  updateTask,
+  deleteTask,
+} from "../api/task";
 
 export default function KanbanBoard({ projectId, token, team = [] }) {
   const columns = ["To Do", "In Progress", "Done"];
-  const [taskColumns, setTaskColumns] = useState({ "To Do": [], "In Progress": [], "Done": [] });
+  const [taskColumns, setTaskColumns] = useState({
+    "To Do": [],
+    "In Progress": [],
+    Done: [],
+  });
   const [allTasks, setAllTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
@@ -20,10 +29,14 @@ export default function KanbanBoard({ projectId, token, team = [] }) {
     loadTasks();
   }, [projectId, token]);
 
-  const statusMap = { "Pending": "To Do", "Ongoing": "In Progress", "Completed": "Done" };
+  const statusMap = {
+    Pending: "To Do",
+    Ongoing: "In Progress",
+    Completed: "Done",
+  };
 
   const groupByStatus = (tasks) => {
-    const colObj = { "To Do": [], "In Progress": [], "Done": [] };
+    const colObj = { "To Do": [], "In Progress": [], Done: [] };
     tasks.forEach((t) => {
       const status = statusMap[t.status] || "To Do";
       colObj[status].push(t);
@@ -46,7 +59,9 @@ export default function KanbanBoard({ projectId, token, team = [] }) {
       let updatedTasks;
       if (editingTask) {
         const updated = await updateTask(token, editingTask._id, taskData);
-        updatedTasks = allTasks.map((t) => (t._id === updated._id ? updated : t));
+        updatedTasks = allTasks.map((t) =>
+          t._id === updated._id ? updated : t
+        );
       } else {
         const newTask = await createTask(token, projectId, taskData);
         updatedTasks = [newTask, ...allTasks];
@@ -121,10 +136,10 @@ export default function KanbanBoard({ projectId, token, team = [] }) {
                   }}
                   onClick={() => openModalForTask(task)}
                 >
-                  <div style={{ fontWeight: "600" }}>{task.title}</div>
+                  <div style={{ fontWeight: "bold" }}>{task.title}</div>
                   <div
                     style={{
-                      fontSize: "0.85rem",
+                      fontSize: "0.8rem",
                       color: "#555",
                       marginTop: "0.25rem",
                     }}
@@ -132,7 +147,14 @@ export default function KanbanBoard({ projectId, token, team = [] }) {
                     Assigned:{" "}
                     {task.assignedTo && task.assignedTo.length > 0
                       ? task.assignedTo
-                          .map((id) => team.find((m) => m._id === id)?.name)
+                          .map((idOrObj) => {
+                            // if object with name use that, otherwise use id to lookup team
+                            const id =
+                              typeof idOrObj === "object"
+                                ? idOrObj._id
+                                : idOrObj;
+                            return team.find((m) => m._id === id)?.name;
+                          })
                           .filter(Boolean)
                           .join(", ")
                       : "Unassigned"}

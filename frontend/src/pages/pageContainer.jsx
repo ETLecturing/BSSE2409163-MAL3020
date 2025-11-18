@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import LoginPage from "./login";
 import RegisterPage from "./register";
 import Dashboard from "./dashboard";
-import KanbanBoard from "../components/kanbanBoard";
+import KanbanBoard from "./kanbanBoard";
 import DashboardSidebar from "../components/sidebar";
 import DashboardNavbar from "../components/navbar";
 
@@ -10,7 +10,7 @@ export default function PageContainer() {
   const [page, setPage] = useState("login");
   const [token, setToken] = useState(null);
   const [username, setUsername] = useState("");
-  const [userId, setUserId] = useState(null); // use decoded token
+  const [userId, setUserId] = useState(null);
   const [activeProject, setActiveProject] = useState(null);
   const [allProjects, setAllProjects] = useState([]);
   const [pinnedProjects, setPinnedProjects] = useState([]);
@@ -35,7 +35,6 @@ export default function PageContainer() {
     }
   }, [token]);
 
-  // Fetch projects/tasks for sidebar
   const loadSidebarData = async (token) => {
     const { fetchProjects, fetchPinnedProjects, fetchPinnedTasks } =
       await import("../api/project");
@@ -44,7 +43,6 @@ export default function PageContainer() {
     setPinnedTasks(await fetchPinnedTasks(token));
   };
 
-  // Fetch tasks for a project
   const loadProjectTasks = async (projectId) => {
     const { fetchProjectTasks } = await import("../api/project");
     const tasks = await fetchProjectTasks(projectId, token);
@@ -52,14 +50,10 @@ export default function PageContainer() {
   };
 
   const handleLoginSuccess = async (res) => {
-    // res = { _id, username, token }
-    console.log(res);
     const { _id, username, token } = res;
-
     setToken(token);
     setUsername(username);
     setUserId(_id);
-
     await loadSidebarData(token);
     setPage("dashboard");
   };
@@ -69,7 +63,7 @@ export default function PageContainer() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
-    localStorage.removeItem("userId"); // match key used in login
+    localStorage.removeItem("userId");
     setToken(null);
     setUsername("");
     setUserId(null);
@@ -127,7 +121,6 @@ export default function PageContainer() {
             pinnedTasks={pinnedTasks}
           />
         );
-
       case "kanban":
         return (
           <div style={{ padding: "1rem" }}>
@@ -145,34 +138,78 @@ export default function PageContainer() {
             />
           </div>
         );
-
       default:
         return <LoginPage onLoginSuccess={handleLoginSuccess} />;
     }
   };
 
   return (
-    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+    <div style={{ height: "100vh", display: "flex", flexDirection: "column", fontFamily: "'Segoe UI', sans-serif", backgroundColor: "#f5f6fa" }}>
+      {/* Navbar / Dashboard */}
       {(page === "dashboard" || page === "kanban") && (
-        <DashboardNavbar username={username} onLogout={handleLogout} />
+        <DashboardNavbar
+          username={username}
+          onLogout={handleLogout}
+          style={{
+            boxShadow: "0 4px 12px rgba(0,0,0,0.15)", // subtle update
+          }}
+        />
       )}
 
+      {/* Login/Register Header */}
       {page !== "dashboard" && page !== "kanban" && (
-        <nav style={{ padding: "1rem", borderBottom: "1px solid #ccc" }}>
-          <button
-            onClick={() => setPage("login")}
-            className={page === "login" ? "active" : ""}
-            style={{ marginRight: "1rem" }}
+        <header
+          style={{
+            padding: "1.5rem 2rem",
+            textAlign: "center",
+            borderBottom: "1px solid #e0e0e0",
+            backgroundColor: "#fff",
+            boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
+          }}
+        >
+          <h1
+            style={{
+              margin: "0 0 1rem 0",
+              fontSize: "1.8rem",
+              fontWeight: 700,
+              color: "#333",
+            }}
           >
-            Login
-          </button>
-          <button
-            onClick={() => setPage("register")}
-            className={page === "register" ? "active" : ""}
-          >
-            Register
-          </button>
-        </nav>
+            Project Management System
+          </h1>
+          <nav style={{ display: "flex", justifyContent: "center", gap: "2rem" }}>
+            <button
+              onClick={() => setPage("login")}
+              style={{
+                padding: "0.5rem 1.5rem",
+                borderRadius: "8px",
+                border: "none",
+                cursor: "pointer",
+                fontWeight: 600,
+                backgroundColor: page === "login" ? "#1e90ff" : "#e0e0e0",
+                color: page === "login" ? "#fff" : "#333",
+                transition: "0.2s",
+              }}
+            >
+              Login
+            </button>
+            <button
+              onClick={() => setPage("register")}
+              style={{
+                padding: "0.5rem 1.5rem",
+                borderRadius: "8px",
+                border: "none",
+                cursor: "pointer",
+                fontWeight: 600,
+                backgroundColor: page === "register" ? "#28a745" : "#e0e0e0",
+                color: page === "register" ? "#fff" : "#333",
+                transition: "0.2s",
+              }}
+            >
+              Register
+            </button>
+          </nav>
+        </header>
       )}
 
       <div style={{ flex: 1, display: "flex", height: "100%" }}>
@@ -185,8 +222,25 @@ export default function PageContainer() {
           />
         )}
 
-        <div style={{ flex: 1, overflow: "auto" }}>{renderPage()}</div>
+        {/* Page content */}
+        <div style={{ flex: 1, overflow: "auto" }}>
+          {renderPage()}
+        </div>
       </div>
+
+      {/* Footer */}
+      {page !== "dashboard" && page !== "kanban" && (
+        <footer
+          style={{
+            textAlign: "center",
+            padding: "0.75rem 0",
+            fontSize: "0.85rem",
+            color: "#aaa",
+          }}
+        >
+          BSSE2409163
+        </footer>
+      )}
     </div>
   );
 }

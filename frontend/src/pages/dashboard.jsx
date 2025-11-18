@@ -117,7 +117,7 @@ export default function Dashboard({
             overflowY: "auto",
             display: "flex",
             flexWrap: "wrap",
-            gap: "1rem",
+            gap: "0.5rem",
             justifyContent: "flex-start",
           }}
         >
