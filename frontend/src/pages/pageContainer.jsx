@@ -5,6 +5,8 @@ import Dashboard from "./dashboard";
 import KanbanBoard from "./kanbanBoard";
 import DashboardSidebar from "../components/sidebar";
 import DashboardNavbar from "../components/navbar";
+import { io } from "socket.io-client";
+
 
 export default function PageContainer() {
   const [page, setPage] = useState("login");
@@ -16,6 +18,8 @@ export default function PageContainer() {
   const [pinnedProjects, setPinnedProjects] = useState([]);
   const [pinnedTasks, setPinnedTasks] = useState([]);
   const [projectTasks, setProjectTasks] = useState([]);
+  const [socket, setSocket] = useState(null);
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -33,7 +37,23 @@ export default function PageContainer() {
     if (token) {
       loadSidebarData(token);
     }
+    
   }, [token]);
+
+  useEffect(() => {
+  if (!token) return;
+
+  const s = io("http://localhost:5000");
+  setSocket(s);
+
+  // listen for project refresh
+  s.on("refreshProject", async () => {
+    await loadSidebarData(token);
+  });
+
+  return () => s.disconnect();
+}, [token]);
+
 
   const loadSidebarData = async (token) => {
     const { fetchProjects, fetchPinnedProjects, fetchPinnedTasks } =
@@ -60,17 +80,19 @@ export default function PageContainer() {
 
   const handleRegisterSuccess = () => setPage("login");
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    localStorage.removeItem("userId");
-    setToken(null);
-    setUsername("");
-    setUserId(null);
-    setPage("login");
-    setActiveProject(null);
-    setProjectTasks([]);
-  };
+const handleLogout = () => {
+  if (socket) socket.disconnect();  
+  localStorage.removeItem("token");
+  localStorage.removeItem("username");
+  localStorage.removeItem("userId");
+  setToken(null);
+  setUsername("");
+  setUserId(null);
+  setPage("login");
+  setActiveProject(null);
+  setProjectTasks([]);
+  setSocket(null); 
+};
 
   const openProjectTasks = async (project) => {
     if (!project) {

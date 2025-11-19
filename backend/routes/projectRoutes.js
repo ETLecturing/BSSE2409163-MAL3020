@@ -2,6 +2,8 @@ import express from "express";
 import Project from "../models/projectModel.js";
 import { protect } from "../middleware/auth.js";
 import { checkProjectAccess } from "../middleware/authorize.js";
+import { io } from "../server.js";
+
 
 const router = express.Router();
 
@@ -49,6 +51,8 @@ router.post("/", protect, async (req, res) => {
     };
     const project = await new Project(payload).save();
     res.status(201).json(project);
+    io.emit("REFRESH_PROJECT");
+
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -62,6 +66,8 @@ router.put("/:id", protect, checkProjectAccess, async (req, res) => {
 
     const project = await Project.findByIdAndUpdate(req.params.id, updates, { new: true }).populate("team", "name");
     res.json(project);
+    io.emit("REFRESH_PROJECT");
+
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -75,6 +81,8 @@ router.delete("/:id", protect, checkProjectAccess, async (req, res) => {
 
     await Project.findByIdAndDelete(req.params.id);
     res.json({ message: "Project deleted" });
+    io.emit("REFRESH_PROJECT");
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

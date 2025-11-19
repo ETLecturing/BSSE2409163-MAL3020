@@ -1,6 +1,8 @@
 import express from "express";
 import Task from "../models/taskModels.js";
 import { protect } from "../middleware/auth.js";
+import { io } from "../server.js";
+
 
 const router = express.Router();
 
@@ -102,6 +104,8 @@ router.post("/", protect, async (req, res) => {
     }).save();
 
     res.status(201).json(task);
+    io.emit("REFRESH_TASK", { projectId });
+
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -127,6 +131,8 @@ router.put("/:id", protect, async (req, res) => {
 
     const updatedTask = await task.save();
     res.json(updatedTask);
+    io.emit("REFRESH_TASK", { projectId: updatedTask.projectId });
+
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -157,6 +163,8 @@ const modifyTask = async (req, res, action) => {
 
     await Task.findByIdAndDelete(req.params.id);
     res.json({ message: "Task deleted" });
+    io.emit("REFRESH_TASK", { projectId: task.projectId });
+
   } catch (err) {
     res.status(action === "update" ? 400 : 500).json({ error: err.message });
   }

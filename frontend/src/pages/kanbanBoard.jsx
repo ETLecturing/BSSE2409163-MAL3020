@@ -29,6 +29,24 @@ export default function KanbanBoard({ projectId, token, team = [] }) {
     loadTasks();
   }, [projectId, token]);
 
+  useEffect(() => {
+  if (!projectId || !token) return;
+
+  const s = io("http://localhost:5000");
+
+  // listen for task refresh events
+  s.on("refreshTask", async (updatedProjectId) => {
+    if (updatedProjectId === projectId) { // only refresh for this project
+      const tasks = await fetchProjectTasks(projectId, token);
+      setAllTasks(tasks);
+      setTaskColumns(groupByStatus(tasks));
+    }
+  });
+
+  return () => s.disconnect(); // cleanup on unmount
+}, [projectId, token]);
+
+
   const statusMap = {
     Pending: "To Do",
     Ongoing: "In Progress",
