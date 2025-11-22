@@ -52,7 +52,7 @@ socket.on("disconnect", () => console.log("Disconnected"));
 
 
   // listen for project refresh
-  s.on("refreshProject", async () => {
+  s.on("REFRESH_PROJECT", async () => {
     await loadSidebarData(token);
   });
 
