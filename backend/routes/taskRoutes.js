@@ -1,7 +1,7 @@
 import express from "express";
 import Task from "../models/taskModels.js";
 import { protect } from "../middleware/auth.js";
-import { io } from "../server.js";
+import { io } from "../socket.js";
 
 
 const router = express.Router();

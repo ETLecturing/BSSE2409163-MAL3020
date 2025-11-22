@@ -38,22 +38,38 @@ router.post("/register", async (req, res) => {
 
 
 // Login
+// Login
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    const user = await User.findOne({ username });
-    if (user && (await user.matchPassword(password))) {
-      return res.json({
-        _id: user._id,
-        name: user.name,
-        username: user.username,
-        token: generateToken(user._id),
-      });
-    } else {
+    // Validate required fields FIRST
+    if (!username || !password) {
       return res.status(401).json({ message: "Invalid username or password" });
     }
+
+    const user = await User.findOne({ username });
+    
+    // Check if user exists AND password matches
+    if (!user) {
+      return res.status(401).json({ message: "Invalid username or password" });
+    }
+
+    const isMatch = await user.matchPassword(password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid username or password" });
+    }
+
+    // Success - return user data and token
+    return res.json({
+      _id: user._id,
+      name: user.name,
+      username: user.username,
+      token: generateToken(user._id),
+    });
+    
   } catch (err) {
+    console.error("Login error:", err); // Debug log
     res.status(500).json({ message: err.message });
   }
 });

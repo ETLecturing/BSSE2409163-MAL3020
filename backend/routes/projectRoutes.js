@@ -2,8 +2,7 @@ import express from "express";
 import Project from "../models/projectModel.js";
 import { protect } from "../middleware/auth.js";
 import { checkProjectAccess } from "../middleware/authorize.js";
-import { io } from "../server.js";
-
+import { io } from "../socket.js";
 
 const router = express.Router();
 
