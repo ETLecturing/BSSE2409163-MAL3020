@@ -1,0 +1,257 @@
+﻿
+> backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand
+
+node.exe : 
+(node:25236) 
+ExperimentalWarning: 
+VM Modules is an 
+experimental feature 
+and might change at 
+any time
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: ((node:2523   
+ 6) Ex...nge at an    
+y time:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+(Use `node 
+--trace-warnings ...` 
+to show where the 
+warning was created)
+PASS tests/integration
+/auth.test.js
+  ΓùÅ Console
+
+    console.log
+      [dotenv@17.2.3] 
+injecting env (3) 
+from .env -- tip: 
+ΓÜÖ∩╕Å  write to 
+custom object with { 
+processEnv: myObject }
+
+      at _log (node_mo
+dules/dotenv/lib/main.
+js:142:11)
+
+PASS 
+tests/sanity.test.js
+  ΓùÅ Console
+
+    console.log
+      [dotenv@17.2.3] 
+injecting env (3) 
+from .env -- tip: 
+ΓÜÖ∩╕Å  specify 
+custom .env file path 
+with { path: 
+'/custom/path/.env' }
+
+      at _log (node_mo
+dules/dotenv/lib/main.
+js:142:11)
+
+PASS tests/unit/projec
+t.test.js
+PASS tests/unit/task.t
+est.js
+PASS tests/unit/middle
+ware.test.js
+  ΓùÅ Console
+
+    console.log
+      Decoded token: 
+{ id: 'user123' }
+
+      at protect (midd
+leware/auth.js:16:13)
+
+    console.error
+      JWT error: 
+Error: Invalid token
+          at 
+Object.<anonymous> (G:
+\Github\MAL3020-Full-S
+tack-Development\backe
+nd\tests\unit\middlewa
+re.test.js:80:23)
+          at G:\Github
+\MAL3020-Full-Stack-De
+velopment\backend\node
+_modules\jest-mock\bui
+ld\index.js:305:39
+          at 
+Object.<anonymous> (G:
+\Github\MAL3020-Full-S
+tack-Development\backe
+nd\node_modules\jest-m
+ock\build\index.js:312
+:13)
+          at Object.mo
+ckConstructor [as 
+verify] (G:\Github\MAL
+3020-Full-Stack-Develo
+pment\backend\node_mod
+ules\jest-mock\build\i
+ndex.js:102:19)
+          at protect (
+G:\Github\MAL3020-Full
+-Stack-Development\bac
+kend\middleware\auth.j
+s:14:25)
+          at 
+Object.<anonymous> (G:
+\Github\MAL3020-Full-S
+tack-Development\backe
+nd\tests\unit\middlewa
+re.test.js:83:19)
+          at Promise.f
+inally.completed (G:\G
+ithub\MAL3020-Full-Sta
+ck-Development\backend
+\node_modules\jest-cir
+cus\build\jestAdapterI
+nit.js:1557:28)
+          at new 
+Promise (<anonymous>)
+          at 
+callAsyncCircusFn (G:\
+Github\MAL3020-Full-St
+ack-Development\backen
+d\node_modules\jest-ci
+rcus\build\jestAdapter
+Init.js:1497:10)
+          at 
+_callCircusTest (G:\Gi
+thub\MAL3020-Full-Stac
+k-Development\backend\
+node_modules\jest-circ
+us\build\jestAdapterIn
+it.js:1007:40)
+          at _runTest 
+(G:\Github\MAL3020-Ful
+l-Stack-Development\ba
+ckend\node_modules\jes
+t-circus\build\jestAda
+pterInit.js:947:3)
+          at G:\Github
+\MAL3020-Full-Stack-De
+velopment\backend\node
+_modules\jest-circus\b
+uild\jestAdapterInit.j
+s:849:7
+          at _runTests
+ForDescribeBlock (G:\G
+ithub\MAL3020-Full-Sta
+ck-Development\backend
+\node_modules\jest-cir
+cus\build\jestAdapterI
+nit.js:862:11)
+          at _runTests
+ForDescribeBlock (G:\G
+ithub\MAL3020-Full-Sta
+ck-Development\backend
+\node_modules\jest-cir
+cus\build\jestAdapterI
+nit.js:857:11)
+          at _runTests
+ForDescribeBlock (G:\G
+ithub\MAL3020-Full-Sta
+ck-Development\backend
+\node_modules\jest-cir
+cus\build\jestAdapterI
+nit.js:857:11)
+          at run (G:\G
+ithub\MAL3020-Full-Sta
+ck-Development\backend
+\node_modules\jest-cir
+cus\build\jestAdapterI
+nit.js:761:3)
+          at runAndTra
+nsformResultsToJestFor
+mat (G:\Github\MAL3020
+-Full-Stack-Developmen
+t\backend\node_modules
+\jest-circus\build\jes
+tAdapterInit.js:1918:2
+1)
+          at 
+jestAdapter (G:\Github
+\MAL3020-Full-Stack-De
+velopment\backend\node
+_modules\jest-circus\b
+uild\runner.js:101:19)
+          at 
+runTestInternal (G:\Gi
+thub\MAL3020-Full-Stac
+k-Development\backend\
+node_modules\jest-runn
+er\build\index.js:275:
+16)
+          at runTest (
+G:\Github\MAL3020-Full
+-Stack-Development\bac
+kend\node_modules\jest
+-runner\build\index.js
+:343:7)
+
+    [0m [90m 17 
+|[39m     
+next()[33m;[39m
+     [90m 18 |[39m  
+ } [36mcatch[39m 
+(err) {
+    [31m[1m>[22m[3
+9m[90m 19 |[39m     
+console[33m.[39merro
+r([32m"JWT error:"[3
+9m[33m,[39m 
+err)[33m;[39m
+     [90m    |[39m  
+           
+[31m[1m^[22m[39m
+     [90m 20 |[39m  
+   [36mreturn[39m re
+s[33m.[39mstatus([3
+5m401[39m)[33m.[39m
+json({ 
+message[33m:[39m 
+[32m"Not authorized, 
+token failed"[39m 
+})[33m;[39m
+     [90m 21 |[39m  
+ }
+     [90m 22 |[39m 
+}[33m;[39m[0m
+
+      at protect (midd
+leware/auth.js:19:13)
+      at 
+Object.<anonymous> (te
+sts/unit/middleware.te
+st.js:83:19)
+
+
+Test Suites: 5 
+passed, 5 total
+Tests:       27 
+passed, 27 total
+Snapshots:   0 total
+Time:        2.241 s, 
+estimated 3 s
+Ran all test suites.
