@@ -1,0 +1,388 @@
+﻿
+> afrontend@0.0.0 test
+> vitest --run
+
+
+[1m[46m RUN [49m[22m [36mv4.0.13 [39m[90mG:/Github/MAL3020-Full-Stack-Development/frontend[39m
+
+ [32mΓ£ô[39m src/__tests__/api/project.test.js [2m([22m[2m4 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32mΓ£ô[39m src/__tests__/components/Dashboard.test.jsx [2m([22m[2m3 tests[22m[2m)[22m[32m 139[2mms[22m[39m
+node.exe : 
+[90mstderr[2m | src/
+__tests__/api/auth.tes
+t.js[2m > 
+[22m[2mauth API[2m 
+> 
+[22m[2mregister[2m 
+> [22m[2mshould 
+handle network errors
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: ([90mstder   
+ r[2m... network     
+errors:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+[22m[39mRegister 
+error: Error: Network 
+error
+    at G:/Github/MAL30
+20-Full-Stack-Developm
+ent/frontend/src/__tes
+ts__/api/auth.test.js:
+67:41
+    at [90mfile:///G:
+/Github/MAL3020-Full-S
+tack-Development/front
+end/[39mnode_modules/
+[4m@vitest[24m/runne
+r/dist/index.js:145:11
+    at [90mfile:///G:
+/Github/MAL3020-Full-S
+tack-Development/front
+end/[39mnode_modules/
+[4m@vitest[24m/runne
+r/dist/index.js:912:26
+    at [90mfile:///G:
+/Github/MAL3020-Full-S
+tack-Development/front
+end/[39mnode_modules/
+[4m@vitest[24m/runne
+r/dist/index.js:1237:2
+0
+    at new Promise 
+(<anonymous>)
+    at runWithTimeout 
+[90m(file:///G:/Githu
+b/MAL3020-Full-Stack-D
+evelopment/frontend/[
+39mnode_modules/[4m@v
+itest[24m/runner/dist
+/index.js:1203:10[90m
+)[39m
+    at [90mfile:///G:
+/Github/MAL3020-Full-S
+tack-Development/front
+end/[39mnode_modules/
+[4m@vitest[24m/runne
+r/dist/index.js:1647:3
+7
+    at Traces.$ [90m(
+file:///G:/Github/MAL3
+020-Full-Stack-Develop
+ment/frontend/[39mnod
+e_modules/[4mvitest[
+24m/dist/chunks/traces
+.U4xDYhzZ.js:115:27[9
+0m)[39m
+    at trace [90m(fil
+e:///G:/Github/MAL3020
+-Full-Stack-Developmen
+t/frontend/[39mnode_m
+odules/[4mvitest[24m
+/dist/chunks/test.DqQZ
+zsWf.js:234:21[90m)[
+39m
+    at runTest [90m(f
+ile:///G:/Github/MAL30
+20-Full-Stack-Developm
+ent/frontend/[39mnode
+_modules/[4m@vitest[
+24m/runner/dist/index.
+js:1647:12[90m)[39m
+
+ [32mΓ£ô[39m src/__tests__/api/auth.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32mΓ£ô[39m src/__tests__/components/KanbanBoard.test.jsx [2m([22m[2m2 tests[22m[2m)[22m[32m 188[2mms[22m[39m
+ [31mΓ¥»[39m src/__tests__/components/Modal.test.jsx [2m([22m[2m4 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 626[2mms[22m[39m
+       [32mΓ£ô[39m should render project name input when open[32m 125[2mms[22m[39m
+       [33m[2mΓ£ô[22m[39m should be closeable [33m 329[2mms[22m[39m
+[31m       [31m├ù[31m should render task title input when open[39m[32m 56[2mms[22m[39m
+       [32mΓ£ô[39m should be closeable[32m 114[2mms[22m[39m
+ [32mΓ£ô[39m src/__tests__/api/task.test.js [2m([22m[2m3 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32mΓ£ô[39m src/__tests__/api/pinning.test.js [2m([22m[2m2 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32mΓ£ô[39m src/__tests__/api/user.test.js [2m([22m[2m2 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+ [32mΓ£ô[39m src/__tests__/components/LoginForm.test.jsx [2m([22m[2m4 tests[22m[2m)[22m[33m 1467[2mms[22m[39m
+     [33m[2mΓ£ô[22m[39m should allow typing in inputs [33m 571[2mms[22m[39m
+     [33m[2mΓ£ô[22m[39m should call login function on form submit [33m 513[2mms[22m[39m
+ [32mΓ£ô[39m src/__tests__/components/RegisterForm.test.jsx [2m([22m[2m4 tests[22m[2m)[22m[33m 1888[2mms[22m[39m
+     [33m[2mΓ£ô[22m[39m should allow typing in all fields [33m 809[2mms[22m[39m
+     [33m[2mΓ£ô[22m[39m should call register function on form submit [33m 730[2mms[22m[39m
+
+[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»[39m[1m[41m 
+Failed Tests 1 [49m[
+22m[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»ΓÄ»[39m
+
+[41m[1m FAIL 
+[22m[49m src/__tests
+__/components/Modal.te
+st.jsx[2m > 
+[22mModal 
+Components[2m > 
+[22mTaskModal[2m > 
+[22mshould render 
+task title input when 
+open
+[31m[1mTestingLibrar
+yElementError[22m: 
+Unable to find a 
+label with the text 
+of: /title:/i
+
+Ignored nodes: 
+comments, script, 
+style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mstyle[31m=
+[32m"position: 
+fixed; inset: 0; 
+background: rgba(0, 
+0, 0, 0.5); display: 
+flex; 
+justify-content: 
+center; align-items: 
+center; font-family: 
+sans-serif;"[31m
+    [36m>[31m
+      [36m<form[31m
+        [33mstyle[31
+m=[32m"background: 
+rgb(255, 255, 255); 
+padding: 2rem; 
+border-radius: 8px; 
+width: 320px; 
+display: flex; 
+flex-direction: 
+column; gap: 
+1rem;"[31m
+      [36m>[31m
+        [36m<h2>[31m
+          [0mAdd 
+Task[0m
+        
+[36m</h2>[31m
+        
+[36m<input[31m
+          [33mplaceho
+lder[31m=[32m"Title"
+[31m
+          [33mrequire
+d[31m=[32m""[31m
+          [33mstyle[
+31m=[32m"padding: 
+0.5rem; font-size: 
+1rem;"[31m
+          [33mtype[3
+1m=[32m"text"[31m
+          [33mvalue[
+31m=[32m""[31m
+        [36m/>[31m
+        
+[36m<textarea[31m
+          [33mplaceho
+lder[31m=[32m"Descri
+ption"[31m
+          [33mstyle[
+31m=[32m"padding: 
+0.5rem; font-size: 
+0.95rem; min-height: 
+80px; resize: 
+vertical;"[31m
+        [36m/>[31m
+        
+[36m<div>[31m
+          
+[36m<strong>[31m
+            
+[0mStatus:[0m
+          
+[36m</strong>[31m
+          
+[36m<div[31m
+            [33mstyle
+[31m=[32m"display: 
+flex; flex-direction: 
+column; gap: 0.3rem; 
+margin-top: 
+0.3rem;"[31m
+          [36m>[31m
+            
+[36m<label>[31m
+              
+[36m<input[31m
+                [33mc
+hecked[31m=[32m""[3
+1m
+                [33mt
+ype[31m=[32m"radio"
+[31m
+                [33mv
+alue[31m=[32m"Pendin
+g"[31m
+              
+[36m/>[31m
+              
+[0mPending[0m
+            
+[36m</label>[31m
+            
+[36m<label>[31m
+              
+[36m<input[31m
+                [33mt
+ype[31m=[32m"radio"
+[31m
+                [33mv
+alue[31m=[32m"Ongoin
+g"[31m
+              
+[36m/>[31m
+              
+[0mOngoing[0m
+            
+[36m</label>[31m
+            
+[36m<label>[31m
+              
+[36m<input[31m
+                [33mt
+ype[31m=[32m"radio"
+[31m
+                [33mv
+alue[31m=[32m"Comple
+ted"[31m
+              
+[36m/>[31m
+              
+[0mCompleted[0m
+            
+[36m</label>[31m
+          
+[36m</div>[31m
+        
+[36m</div>[31m
+        
+[36m<div>[31m
+          
+[36m<strong>[31m
+            
+[0mAssign To:[0m
+          
+[36m</strong>[31m
+          
+[36m<div[31m
+            [33mstyle
+[31m=[32m"display: 
+flex; flex-direction: 
+column; gap: 0.3rem; 
+margin-top: 
+0.3rem;"[31m
+          [36m/>[31m
+        
+[36m</div>[31m
+        [36m<div[31m
+          [33mstyle[
+31m=[32m"display: 
+flex; 
+justify-content: 
+space-between; 
+margin-top: 
+1rem;"[31m
+        [36m>[31m
+          
+[36m<button[31m
+            [33mtype
+[31m=[32m"submit"[31
+m
+          [36m>[31m
+            
+[0mAdd[0m
+          
+[36m</button>[31m
+          
+[36m<button[31m
+            [33mtype
+[31m=[32m"button"[31
+m
+          [36m>[31m
+            
+[0mCancel[0m
+          
+[36m</button>[31m
+        
+[36m</div>[31m
+      
+[36m</form>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+[90m [2mΓ¥»[22m Obj
+ect.getElementError no
+de_modules/@testing-li
+brary/dom/dist/config.
+js:[2m37:19[22m[39m
+[90m [2mΓ¥»[22m 
+getAllByLabelText node
+_modules/@testing-libr
+ary/dom/dist/queries/l
+abel-text.js:[2m111:3
+8[22m[39m
+[90m [2mΓ¥»[22m nod
+e_modules/@testing-lib
+rary/dom/dist/query-he
+lpers.js:[2m52:17[22
+m[39m
+[90m [2mΓ¥»[22m nod
+e_modules/@testing-lib
+rary/dom/dist/query-he
+lpers.js:[2m95:19[22
+m[39m
+[36m [2mΓ¥»[22m src
+/__tests__/components/
+Modal.test.jsx:[2m68:
+27[22m[39m
+    [90m 66| [39m
+    [90m 67| [39m   
+         [90m// The 
+label is "Title:" not 
+"Task Title"[39m
+    [90m 68| [39m   
+         expect(screen
+.getByLabelText(/title
+:/i)).toBeInTheDocumen
+tΓÇª
+    [90m   | [39m   
+                      
+ [31m^[39m
+    [90m 69| [39m   
+     })[33m;[39m
+    [90m 70| [39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»Γ
+Ä»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[1/1]ΓÄ
+»[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m9 passed[39m[22m[90m (10)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m32 passed[39m[22m[90m (33)[39m
+[2m   Start at [22m 19:50:29
+[2m   Duration [22m 3.59s[2m (transform 303ms, setup 2.97s, collect 706ms, tests 4.34s, environment 9.00s, prepare 185ms)[22m
+

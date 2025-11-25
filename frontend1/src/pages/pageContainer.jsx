@@ -43,16 +43,11 @@ export default function PageContainer() {
   useEffect(() => {
   if (!token) return;
 
-  const s = io();
+  const s = io("http://localhost:5000");
   setSocket(s);
 
-  const socket = io(); // or io("http://backend:5000")
-socket.on("connect", () => console.log("Connected!", socket.id));
-socket.on("disconnect", () => console.log("Disconnected"));
-
-
   // listen for project refresh
-  s.on("REFRESH_PROJECT", async () => {
+  s.on("refreshProject", async () => {
     await loadSidebarData(token);
   });
 

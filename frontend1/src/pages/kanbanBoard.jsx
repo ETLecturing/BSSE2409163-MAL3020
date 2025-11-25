@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import TaskModal from "../components/taskModal";
-import { io } from "socket.io-client";
 import {
   fetchProjectTasks,
   createTask,
@@ -30,50 +29,22 @@ export default function KanbanBoard({ projectId, token, team = [] }) {
     loadTasks();
   }, [projectId, token]);
 
-  // FIX: Add better logging and ensure proper event handling
   useEffect(() => {
-    if (!projectId || !token) return;
+  if (!projectId || !token) return;
 
-    const s = io();
+  const s = io("http://localhost:5000");
 
-    // Log connection
-    s.on("connect", () => {
-      console.log("🔌 KanbanBoard socket connected:", s.id);
-    });
+  // listen for task refresh events
+  s.on("refreshTask", async (updatedProjectId) => {
+    if (updatedProjectId === projectId) { // only refresh for this project
+      const tasks = await fetchProjectTasks(projectId, token);
+      setAllTasks(tasks);
+      setTaskColumns(groupByStatus(tasks));
+    }
+  });
 
-    s.on("disconnect", () => {
-      console.log("🔌 KanbanBoard socket disconnected");
-    });
-
-    // Listen for task refresh events with better logging
-    // FIX: Changed from "refreshTask" to "REFRESH_TASK" to match backend
-    s.on("REFRESH_TASK", async (data) => {
-      console.log("📋 Received REFRESH_TASK event:", data);
-      console.log("📋 Current project:", projectId);
-      
-      // Backend sends { projectId: "..." }
-      const updatedProjectId = data?.projectId;
-      
-      // Refresh if it matches this project OR if no projectId sent (refresh all)
-      if (!updatedProjectId || updatedProjectId === projectId) {
-        console.log("♻️ Refreshing tasks...");
-        try {
-          const tasks = await fetchProjectTasks(projectId, token);
-          setAllTasks(tasks);
-          setTaskColumns(groupByStatus(tasks));
-          console.log("✅ Tasks refreshed successfully");
-        } catch (error) {
-          console.error("❌ Error refreshing tasks:", error);
-        }
-      }
-    });
-
-    // Cleanup on unmount
-    return () => {
-      console.log("🧹 Cleaning up KanbanBoard socket");
-      s.disconnect();
-    };
-  }, [projectId, token]);
+  return () => s.disconnect(); // cleanup on unmount
+}, [projectId, token]);
 
 
   const statusMap = {

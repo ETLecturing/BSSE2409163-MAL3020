@@ -129,7 +129,7 @@ export const updateProject = async (token, projectId, data) => {
 
 export async function updateProjectTeam(projectId, team) {
   try {
-    const res = await fetch(`http://localhost:5000/api/projects/${projectId}`, {
+    const res = await fetch(`/api/projects/${projectId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ team }),

@@ -1,0 +1,1221 @@
+﻿
+> afrontend@0.0.0 test
+> vitest --run
+
+
+[1m[46m RUN [49m[22m [36mv4.0.13 [39m[90mG:/Github/MAL3020-Full-Stack-Development/frontend[39m
+
+ [31mΓ¥»[39m src/__tests__/api/task.test.js [2m([22m[2m3 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 10[2mms[22m[39m
+[31m       [31m├ù[31m should send POST request with task data and projectId[39m[32m 7[2mms[22m[39m
+       [32mΓ£ô[39m should send PUT request with updated task data[32m 1[2mms[22m[39m
+       [32mΓ£ô[39m should send DELETE request[32m 0[2mms[22m[39m
+ [31mΓ¥»[39m src/__tests__/components/KanbanBoard.test.jsx [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 187[2mms[22m[39m
+[31m     [31m├ù[31m should render column headers[39m[32m 158[2mms[22m[39m
+     [32mΓ£ô[39m should render Add Task button[32m 26[2mms[22m[39m
+ [31mΓ¥»[39m src/__tests__/api/project.test.js [2m([22m[2m4 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[32m 18[2mms[22m[39m
+[31m       [31m├ù[31m should send POST request with project data[39m[32m 11[2mms[22m[39m
+       [32mΓ£ô[39m should include auth token in headers[32m 1[2mms[22m[39m
+       [32mΓ£ô[39m should send PUT request with updated data[32m 1[2mms[22m[39m
+[31m       [31m├ù[31m should send DELETE request[39m[32m 2[2mms[22m[39m
+ [31mΓ¥»[39m src/__tests__/components/Modal.test.jsx [2m([22m[2m4 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[33m 597[2mms[22m[39m
+[31m       [31m├ù[31m should render project name input when open[39m[32m 99[2mms[22m[39m
+       [33m[2mΓ£ô[22m[39m should be closeable [33m 338[2mms[22m[39m
+[31m       [31m├ù[31m should render task title input when open[39m[32m 16[2mms[22m[39m
+       [32mΓ£ô[39m should be closeable[32m 139[2mms[22m[39m
+node.exe : 
+[90mstderr[2m | src/
+__tests__/api/auth.tes
+t.js[2m > 
+[22m[2mauth API[2m 
+> 
+[22m[2mregister[2m 
+> [22m[2mshould 
+handle network errors
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: ([90mstder   
+ r[2m... network     
+errors:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+[22m[39mRegister 
+error: Error: Network 
+error
+    at G:/Github/MAL30
+20-Full-Stack-Developm
+ent/frontend/src/__tes
+ts__/api/auth.test.js:
+67:41
+    at [90mfile:///G:
+/Github/MAL3020-Full-S
+tack-Development/front
+end/[39mnode_modules/
+[4m@vitest[24m/runne
+r/dist/index.js:145:11
+    at [90mfile:///G:
+/Github/MAL3020-Full-S
+tack-Development/front
+end/[39mnode_modules/
+[4m@vitest[24m/runne
+r/dist/index.js:912:26
+    at [90mfile:///G:
+/Github/MAL3020-Full-S
+tack-Development/front
+end/[39mnode_modules/
+[4m@vitest[24m/runne
+r/dist/index.js:1237:2
+0
+    at new Promise 
+(<anonymous>)
+    at runWithTimeout 
+[90m(file:///G:/Githu
+b/MAL3020-Full-Stack-D
+evelopment/frontend/[
+39mnode_modules/[4m@v
+itest[24m/runner/dist
+/index.js:1203:10[90m
+)[39m
+    at [90mfile:///G:
+/Github/MAL3020-Full-S
+tack-Development/front
+end/[39mnode_modules/
+[4m@vitest[24m/runne
+r/dist/index.js:1647:3
+7
+    at Traces.$ [90m(
+file:///G:/Github/MAL3
+020-Full-Stack-Develop
+ment/frontend/[39mnod
+e_modules/[4mvitest[
+24m/dist/chunks/traces
+.U4xDYhzZ.js:115:27[9
+0m)[39m
+    at trace [90m(fil
+e:///G:/Github/MAL3020
+-Full-Stack-Developmen
+t/frontend/[39mnode_m
+odules/[4mvitest[24m
+/dist/chunks/test.DqQZ
+zsWf.js:234:21[90m)[
+39m
+    at runTest [90m(f
+ile:///G:/Github/MAL30
+20-Full-Stack-Developm
+ent/frontend/[39mnode
+_modules/[4m@vitest[
+24m/runner/dist/index.
+js:1647:12[90m)[39m
+
+ [32mΓ£ô[39m src/__tests__/api/auth.test.js [2m([22m[2m5 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32mΓ£ô[39m src/__tests__/api/pinning.test.js [2m([22m[2m2 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32mΓ£ô[39m src/__tests__/api/user.test.js [2m([22m[2m2 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+ [32mΓ£ô[39m src/__tests__/components/LoginForm.test.jsx [2m([22m[2m4 tests[22m[2m)[22m[33m 1442[2mms[22m[39m
+     [33m[2mΓ£ô[22m[39m should allow typing in inputs [33m 611[2mms[22m[39m
+     [33m[2mΓ£ô[22m[39m should call login function on form submit [33m 546[2mms[22m[39m
+ [32mΓ£ô[39m src/__tests__/components/RegisterForm.test.jsx [2m([22m[2m4 tests[22m[2m)[22m[33m 1858[2mms[22m[39m
+     [33m[2mΓ£ô[22m[39m should allow typing in all fields [33m 769[2mms[22m[39m
+     [33m[2mΓ£ô[22m[39m should call register function on form submit [33m 713[2mms[22m[39m
+
+[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»[39m[1m[41m 
+Failed Suites 1 [49m
+[22m[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»Γ
+Ä»ΓÄ»ΓÄ»[39m
+
+[41m[1m FAIL 
+[22m[49m src/__tests
+__/components/Dashboar
+d.test.jsx[2m [ src/_
+_tests__/components/Da
+shboard.test.jsx 
+][22m
+[31m[1mError[22m: 
+Expected `,` but 
+found `{`[39m
+  Plugin: 
+[35mvite:oxc[39m
+  File: [36mG:/Github
+/MAL3020-Full-Stack-De
+velopment/frontend/src
+/__tests__/components/
+Dashboard.test.jsx[39
+m:7:45
+[33m  `,` expected
+  5  |  // Mock child 
+components
+  6  |  vi.mock('../..
+/components/projectCar
+d', () => ({
+  7  |      default: 
+({ project }) => 
+\u003cdiv\u003e{ 
+project.name }\u003c 
+/ div\u003e,
+     |                
+                      
+               ^
+  8  |  }));
+  9  |  [39m
+[90m [2mΓ¥»[22m 
+transformWithOxc node_
+modules/vite/dist/node
+/chunks/node.js:[2m51
+38:19[22m[39m
+[90m [2mΓ¥»[22m Tra
+nsformPluginContext.tr
+ansform node_modules/v
+ite/dist/node/chunks/n
+ode.js:[2m5217:26[22
+m[39m
+[90m [2mΓ¥»[22m Env
+ironmentPluginContaine
+r.transform node_modul
+es/vite/dist/node/chun
+ks/node.js:[2m30458:5
+1[22m[39m
+[90m [2mΓ¥»[22m 
+loadAndTransform node_
+modules/vite/dist/node
+/chunks/node.js:[2m21
+576:26[22m[39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»Γ
+Ä»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[1/7]ΓÄ
+»[22m[39m
+
+
+[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»[39m[1m[41m 
+Failed Tests 6 [49m[
+22m[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»ΓÄ»[39m
+
+[41m[1m FAIL 
+[22m[49m src/__tests
+__/api/project.test.js
+[2m > [22mproject 
+API[2m > [22mcreateP
+roject[2m > 
+[22mshould send POST 
+request with project 
+data
+[31m[1mAssertionErro
+r[22m: expected 
+"vi.fn()" to be 
+called with 
+arguments: [ ΓÇª(2) 
+][90m
+
+Received: 
+
+[1m  1st vi.fn() 
+call:
+
+[22m[33m@@ -1,9 
++1,9 @@[90m
+[2m  [[22m
+[2m    "http://localh
+ost:5000/api/projects"
+,[22m
+[2m    {[22m
+[32m-     "body": 
+"{\"name\":\"Test Proj
+ect\",\"description\":
+\"Test\"}",[90m
+[31m+     "body": 
+"{\"name\":\"Test Proj
+ect\",\"description\":
+\"Test\",\"team\":[]}"
+,[90m
+[2m      "headers": 
+{[22m
+[2m        
+"Authorization": 
+"Bearer 
+test-token-123",[22m
+[2m        
+"Content-Type": "appli
+cation/json",[22m
+[2m      },[22m
+[2m      "method": 
+"POST",[22m
+[31m[90m
+
+Number of calls: 
+[1m1[22m
+[31m[39m
+[36m [2mΓ¥»[22m src
+/__tests__/api/project
+.test.js:[2m22:27[22
+m[39m
+    [90m 20| [39m   
+         
+[35mawait[39m [34mc
+reateProject[39m(mock
+Token[33m,[39m proje
+ctData)[33m;[39m
+    [90m 21| [39m
+    [90m 22| [39m   
+         expect(fetch)
+.toHaveBeenCalledWith(
+'http://localhost:5000
+/ΓÇª
+    [90m   | [39m   
+                      
+ [31m^[39m
+    [90m 23| [39m   
+             
+method[33m:[39m [32
+m'POST'[39m[33m,[39
+m
+    [90m 24| [39m   
+             
+headers[33m:[39m {
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»Γ
+Ä»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[2/7]ΓÄ
+»[22m[39m
+
+[41m[1m FAIL 
+[22m[49m src/__tests
+__/api/project.test.js
+[2m > [22mproject 
+API[2m > [22mdeleteP
+roject[2m > 
+[22mshould send 
+DELETE request
+[31m[1mAssertionErro
+r[22m: expected 
+"vi.fn()" to be 
+called with 
+arguments: [ ΓÇª(2) 
+][90m
+
+Received: 
+
+[1m  1st vi.fn() 
+call:
+
+[22m[2m  [[22m
+[2m    "http://localh
+ost:5000/api/projects/
+project123",[22m
+[2m    {[22m
+[2m      "headers": 
+{[22m
+[2m        
+"Authorization": 
+"Bearer 
+test-token-123",[22m
+[31m+       
+"Content-Type": "appli
+cation/json",[90m
+[2m      },[22m
+[2m      "method": 
+"DELETE",[22m
+[2m    },[22m
+[2m  ][22m
+[31m[90m
+
+Number of calls: 
+[1m1[22m
+[31m[39m
+[36m [2mΓ¥»[22m src
+/__tests__/api/project
+.test.js:[2m75:27[22
+m[39m
+    [90m 73| [39m   
+         
+[35mawait[39m [34md
+eleteProject[39m(mock
+Token[33m,[39m [32m
+'project123'[39m)[33
+m;[39m
+    [90m 74| [39m
+    [90m 75| [39m   
+         expect(fetch)
+.toHaveBeenCalledWith(
+'http://localhost:5000
+/ΓÇª
+    [90m   | [39m   
+                      
+ [31m^[39m
+    [90m 76| [39m   
+             
+method[33m:[39m [32
+m'DELETE'[39m[33m,[
+39m
+    [90m 77| [39m   
+             
+headers[33m:[39m {
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»Γ
+Ä»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[3/7]ΓÄ
+»[22m[39m
+
+[41m[1m FAIL 
+[22m[49m src/__tests
+__/api/task.test.js[2
+m > [22mtask API[2m 
+> [22mcreateTask[2m 
+> [22mshould send 
+POST request with 
+task data and 
+projectId
+[31m[1mAssertionErro
+r[22m: expected 
+"vi.fn()" to be 
+called with 
+arguments: [ ΓÇª(2) 
+][90m
+
+Received: 
+
+[1m  1st vi.fn() 
+call:
+
+[22m[33m@@ -1,9 
++1,9 @@[90m
+[2m  [[22m
+[2m    "http://localh
+ost:5000/api/tasks",[
+22m
+[2m    {[22m
+[32m-     "body": 
+"{\"title\":\"Test Tas
+k\",\"projectId\":\"pr
+oject123\",\"descripti
+on\":\"Test 
+description\"}",[90m
+[31m+     "body": "{\
+"projectId\":{\"title\
+":\"Test Task\",\"proj
+ectId\":\"project123\"
+,\"description\":\"Tes
+t 
+description\"}}",[90m
+[2m      "headers": 
+{[22m
+[2m        
+"Authorization": 
+"Bearer 
+test-token-123",[22m
+[2m        
+"Content-Type": "appli
+cation/json",[22m
+[2m      },[22m
+[2m      "method": 
+"POST",[22m
+[31m[90m
+
+Number of calls: 
+[1m1[22m
+[31m[39m
+[36m [2mΓ¥»[22m src
+/__tests__/api/task.te
+st.js:[2m27:27[22m[
+39m
+    [90m 25| [39m   
+         
+[35mawait[39m [34mc
+reateTask[39m(mockTok
+en[33m,[39m 
+taskData)[33m;[39m
+    [90m 26| [39m
+    [90m 27| [39m   
+         expect(fetch)
+.toHaveBeenCalledWith(
+'http://localhost:5000
+/ΓÇª
+    [90m   | [39m   
+                      
+ [31m^[39m
+    [90m 28| [39m   
+             
+method[33m:[39m [32
+m'POST'[39m[33m,[39
+m
+    [90m 29| [39m   
+             
+headers[33m:[39m {
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»Γ
+Ä»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[4/7]ΓÄ
+»[22m[39m
+
+[41m[1m FAIL 
+[22m[49m src/__tests
+__/components/KanbanBo
+ard.test.jsx[2m > 
+[22mKanbanBoard[2m 
+> [22mshould render 
+column headers
+[31m[1mTestingLibrar
+yElementError[22m: 
+Unable to find an 
+element with the 
+text: /pending/i. 
+This could be because 
+the text is broken up 
+by multiple elements. 
+In this case, you can 
+provide a function 
+for your text matcher 
+to make your matcher 
+more flexible.
+
+Ignored nodes: 
+comments, script, 
+style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mstyle[31m=
+[32m"display: flex; 
+flex-direction: 
+column; gap: 
+1rem;"[31m
+    [36m>[31m
+      
+[36m<button[31m
+        [33mstyle[31
+m=[32m"width: 150px; 
+padding: 0.5rem; 
+border-radius: 6px; 
+border: medium; 
+background: rgb(0, 
+123, 255); color: 
+rgb(255, 255, 255); 
+cursor: pointer; 
+align-self: 
+flex-start;"[31m
+      [36m>[31m
+        [0m+ Add 
+Task[0m
+      
+[36m</button>[31m
+      [36m<div[31m
+        [33mstyle[31
+m=[32m"display: 
+flex; gap: 1rem;"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mstyle[
+31m=[32m"flex: 1 1 
+0%; background: 
+rgb(245, 245, 245); 
+padding: 1rem; 
+border-radius: 8px; 
+min-height: 
+300px;"[31m
+        [36m>[31m
+          
+[36m<h3[31m
+            [33mstyle
+[31m=[32m"text-align
+: center;"[31m
+          [36m>[31m
+            [0mTo 
+Do[0m
+          
+[36m</h3>[31m
+          [36m<p[31m
+            [33mstyle
+[31m=[32m"font-style
+: italic; color: 
+rgb(136, 136, 
+136);"[31m
+          [36m>[31m
+            [0mNo 
+tasks[0m
+          
+[36m</p>[31m
+        
+[36m</div>[31m
+        [36m<div[31m
+          [33mstyle[
+31m=[32m"flex: 1 1 
+0%; background: 
+rgb(245, 245, 245); 
+padding: 1rem; 
+border-radius: 8px; 
+min-height: 
+300px;"[31m
+        [36m>[31m
+          
+[36m<h3[31m
+            [33mstyle
+[31m=[32m"text-align
+: center;"[31m
+          [36m>[31m
+            [0mIn 
+Progress[0m
+          
+[36m</h3>[31m
+          [36m<p[31m
+            [33mstyle
+[31m=[32m"font-style
+: italic; color: 
+rgb(136, 136, 
+136);"[31m
+          [36m>[31m
+            [0mNo 
+tasks[0m
+          
+[36m</p>[31m
+        
+[36m</div>[31m
+        [36m<div[31m
+          [33mstyle[
+31m=[32m"flex: 1 1 
+0%; background: 
+rgb(245, 245, 245); 
+padding: 1rem; 
+border-radius: 8px; 
+min-height: 
+300px;"[31m
+        [36m>[31m
+          
+[36m<h3[31m
+            [33mstyle
+[31m=[32m"text-align
+: center;"[31m
+          [36m>[31m
+            
+[0mDone[0m
+          
+[36m</h3>[31m
+          [36m<p[31m
+            [33mstyle
+[31m=[32m"font-style
+: italic; color: 
+rgb(136, 136, 
+136);"[31m
+          [36m>[31m
+            [0mNo 
+tasks[0m
+          
+[36m</p>[31m
+        
+[36m</div>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+[90m [2mΓ¥»[22m Obj
+ect.getElementError no
+de_modules/@testing-li
+brary/dom/dist/config.
+js:[2m37:19[22m[39m
+[90m [2mΓ¥»[22m nod
+e_modules/@testing-lib
+rary/dom/dist/query-he
+lpers.js:[2m76:38[22
+m[39m
+[90m [2mΓ¥»[22m nod
+e_modules/@testing-lib
+rary/dom/dist/query-he
+lpers.js:[2m52:17[22
+m[39m
+[90m [2mΓ¥»[22m nod
+e_modules/@testing-lib
+rary/dom/dist/query-he
+lpers.js:[2m95:19[22
+m[39m
+[36m [2mΓ¥»[22m src
+/__tests__/components/
+KanbanBoard.test.jsx:
+[2m24:23[22m[39m
+    [90m 22| [39m   
+     [34mrender[39m(
+[33m<[39m[33mKanban
+Board[39m [33m{[39m
+[33m...[39mmockProps
+[33m}[39m [33m/[39
+m[33m>[39m)[33m;[3
+9m
+    [90m 23| [39m
+    [90m 24| [39m   
+     [34mexpect[39m(
+screen[33m.[39m[34m
+getByText[39m([36m/p
+ending/i[39m))[33m.
+[39m[34mtoBeInTheDocu
+ment[39m()[33m;[39m
+    [90m   | [39m   
+                   
+[31m^[39m
+    [90m 25| [39m   
+     [34mexpect[39m(
+screen[33m.[39m[34m
+getByText[39m([36m/o
+ngoing/i[39m))[33m.
+[39m[34mtoBeInTheDocu
+ment[39m()[33m;[39m
+    [90m 26| [39m   
+     [34mexpect[39m(
+screen[33m.[39m[34m
+getByText[39m([36m/c
+ompleted/i[39m))[33m
+.[39m[34mtoBeInTheDo
+cument[39m()[33m;[3
+9m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»Γ
+Ä»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[5/7]ΓÄ
+»[22m[39m
+
+[41m[1m FAIL 
+[22m[49m src/__tests
+__/components/Modal.te
+st.jsx[2m > 
+[22mModal 
+Components[2m > 
+[22mProjectModal[2m 
+> [22mshould render 
+project name input 
+when open
+[31m[1mTestingLibrar
+yElementError[22m: 
+Unable to find an 
+element with the 
+placeholder text of: 
+/project name/i
+
+Ignored nodes: 
+comments, script, 
+style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mstyle[31m=
+[32m"position: 
+fixed; top: 0px; 
+left: 0px; width: 
+100vw; height: 100vh; 
+background-color: 
+rgba(0, 0, 0, 0.5); 
+display: flex; 
+align-items: center; 
+justify-content: 
+center; z-index: 
+1000;"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mstyle[31
+m=[32m"background-col
+or: rgb(255, 255, 
+255); padding: 2rem; 
+border-radius: 8px; 
+width: 400px; 
+max-height: 80vh; 
+overflow-y: auto; 
+box-shadow: 0 4px 
+12px 
+rgba(0,0,0,0.2);"[31m
+      [36m>[31m
+        [36m<h2[31m
+          [33mstyle[
+31m=[32m"margin-botto
+m: 1rem;"[31m
+        [36m>[31m
+          [0mCreate 
+Project[0m
+        
+[36m</h2>[31m
+        
+[36m<form>[31m
+          
+[36m<div[31m
+            [33mstyle
+[31m=[32m"margin-bot
+tom: 1rem;"[31m
+          [36m>[31m
+            
+[36m<label>[31m
+              
+[0mName:[0m
+              
+[36m<input[31m
+                [33mr
+equired[31m=[32m""[
+31m
+                [33ms
+tyle[31m=[32m"width:
+ 100%; padding: 
+0.4rem; margin-top: 
+0.2rem;"[31m
+                [33mt
+ype[31m=[32m"text"[
+31m
+                [33mv
+alue[31m=[32m""[31m
+              
+[36m/>[31m
+            
+[36m</label>[31m
+          
+[36m</div>[31m
+          
+[36m<div[31m
+            [33mstyle
+[31m=[32m"margin-bot
+tom: 1rem;"[31m
+          [36m>[31m
+            
+[36m<label>[31m
+              
+[0mDescription:[0m
+              
+[36m<textarea[31m
+                [33mr
+ows[31m=[32m"3"[31m
+                [33ms
+tyle[31m=[32m"width:
+ 100%; padding: 
+0.4rem; margin-top: 
+0.2rem;"[31m
+              
+[36m/>[31m
+            
+[36m</label>[31m
+          
+[36m</div>[31m
+          
+[36m<div[31m
+            [33mstyle
+[31m=[32m"margin-bot
+tom: 1rem;"[31m
+          [36m>[31m
+            
+[36m<p[31m
+              [33msty
+le[31m=[32m"margin-b
+ottom: 0.5rem;"[31m
+            
+[36m>[31m
+              
+[0mTeam Members:[0m
+            
+[36m</p>[31m
+            
+[36m<div[31m
+              [33msty
+le[31m=[32m"display:
+ flex; gap: 0.5rem; 
+margin-bottom: 
+0.5rem;"[31m
+            
+[36m>[31m
+              
+[36m<input[31m
+                [33mp
+laceholder[31m=[32m"
+Search by 
+username..."[31m
+                [33ms
+tyle[31m=[32m"flex: 
+1 1 0%; padding: 
+0.4rem;"[31m
+                [33mt
+ype[31m=[32m"text"[
+31m
+                [33mv
+alue[31m=[32m""[31m
+              
+[36m/>[31m
+              
+[36m<button[31m
+                [33ms
+tyle[31m=[32m"paddin
+g: 0.4rem 
+0.8rem;"[31m
+                [33mt
+ype[31m=[32m"button"
+[31m
+              
+[36m>[31m
+                
+[0mSearch[0m
+              
+[36m</button>[31m
+            
+[36m</div>[31m
+          
+[36m</div>[31m
+          
+[36m<div[31m
+            [33mstyle
+[31m=[32m"display: 
+flex; 
+justify-content: 
+flex-end; gap: 
+0.5rem;"[31m
+          [36m>[31m
+            
+[36m<button[31m
+              [33msty
+le[31m=[32m"padding:
+ 0.4rem 0.8rem;"[31m
+              [33mtyp
+e[31m=[32m"button"[
+31m
+            
+[36m>[31m
+              
+[0mCancel[0m
+            
+[36m</button>[31m
+            
+[36m<button[31m
+              [33msty
+le[31m=[32m"padding:
+ 0.4rem 0.8rem; 
+background-color: 
+rgb(0, 123, 255); 
+color: rgb(255, 255, 
+255); border: medium; 
+border-radius: 
+4px;"[31m
+              [33mtyp
+e[31m=[32m"submit"[
+31m
+            
+[36m>[31m
+              
+[0mCreate[0m
+            
+[36m</button>[31m
+          
+[36m</div>[31m
+        
+[36m</form>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+[90m [2mΓ¥»[22m Obj
+ect.getElementError no
+de_modules/@testing-li
+brary/dom/dist/config.
+js:[2m37:19[22m[39m
+[90m [2mΓ¥»[22m nod
+e_modules/@testing-lib
+rary/dom/dist/query-he
+lpers.js:[2m76:38[22
+m[39m
+[90m [2mΓ¥»[22m nod
+e_modules/@testing-lib
+rary/dom/dist/query-he
+lpers.js:[2m52:17[22
+m[39m
+[90m [2mΓ¥»[22m nod
+e_modules/@testing-lib
+rary/dom/dist/query-he
+lpers.js:[2m95:19[22
+m[39m
+[36m [2mΓ¥»[22m src
+/__tests__/components/
+Modal.test.jsx:[2m26:
+27[22m[39m
+    [90m 24| [39m   
+         )[33m;[39m
+    [90m 25| [39m
+    [90m 26| [39m   
+         expect(screen
+.getByPlaceholderText(
+/project 
+name/i)).toBeIΓÇª
+    [90m   | [39m   
+                      
+ [31m^[39m
+    [90m 27| [39m   
+     })[33m;[39m
+    [90m 28| [39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»Γ
+Ä»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[6/7]ΓÄ
+»[22m[39m
+
+[41m[1m FAIL 
+[22m[49m src/__tests
+__/components/Modal.te
+st.jsx[2m > 
+[22mModal 
+Components[2m > 
+[22mTaskModal[2m > 
+[22mshould render 
+task title input when 
+open
+[31m[1mTestingLibrar
+yElementError[22m: 
+Unable to find an 
+element with the 
+placeholder text of: 
+/task title/i
+
+Ignored nodes: 
+comments, script, 
+style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mstyle[31m=
+[32m"position: 
+fixed; inset: 0; 
+background: rgba(0, 
+0, 0, 0.5); display: 
+flex; 
+justify-content: 
+center; align-items: 
+center; font-family: 
+sans-serif;"[31m
+    [36m>[31m
+      [36m<form[31m
+        [33mstyle[31
+m=[32m"background: 
+rgb(255, 255, 255); 
+padding: 2rem; 
+border-radius: 8px; 
+width: 320px; 
+display: flex; 
+flex-direction: 
+column; gap: 
+1rem;"[31m
+      [36m>[31m
+        [36m<h2>[31m
+          [0mAdd 
+Task[0m
+        
+[36m</h2>[31m
+        
+[36m<input[31m
+          [33mplaceho
+lder[31m=[32m"Title"
+[31m
+          [33mrequire
+d[31m=[32m""[31m
+          [33mstyle[
+31m=[32m"padding: 
+0.5rem; font-size: 
+1rem;"[31m
+          [33mtype[3
+1m=[32m"text"[31m
+          [33mvalue[
+31m=[32m""[31m
+        [36m/>[31m
+        
+[36m<textarea[31m
+          [33mplaceho
+lder[31m=[32m"Descri
+ption"[31m
+          [33mstyle[
+31m=[32m"padding: 
+0.5rem; font-size: 
+0.95rem; min-height: 
+80px; resize: 
+vertical;"[31m
+        [36m/>[31m
+        
+[36m<div>[31m
+          
+[36m<strong>[31m
+            
+[0mStatus:[0m
+
+          
+[36m</strong>[31m
+          
+[36m<div[31m
+            [33mstyle
+[31m=[32m"display: 
+flex; flex-direction: 
+column; gap: 0.3rem; 
+margin-top: 
+0.3rem;"[31m
+          [36m>[31m
+            
+[36m<label>[31m
+              
+[36m<input[31m
+                [33mc
+hecked[31m=[32m""[3
+1m
+                [33mt
+ype[31m=[32m"radio"
+[31m
+                [33mv
+alue[31m=[32m"Pendin
+g"[31m
+              
+[36m/>[31m
+              
+[0mPending[0m
+            
+[36m</label>[31m
+            
+[36m<label>[31m
+              
+[36m<input[31m
+                [33mt
+ype[31m=[32m"radio"
+[31m
+                [33mv
+alue[31m=[32m"Ongoin
+g"[31m
+              
+[36m/>[31m
+              
+[0mOngoing[0m
+            
+[36m</label>[31m
+            
+[36m<label>[31m
+              
+[36m<input[31m
+                [33mt
+ype[31m=[32m"radio"
+[31m
+                [33mv
+alue[31m=[32m"Comple
+ted"[31m
+              
+[36m/>[31m
+              
+[0mCompleted[0m
+            
+[36m</label>[31m
+          
+[36m</div>[31m
+        
+[36m</div>[31m
+        
+[36m<div>[31m
+          
+[36m<strong>[31m
+            
+[0mAssign To:[0m
+          
+[36m</strong>[31m
+          
+[36m<div[31m
+            [33mstyle
+[31m=[32m"display: 
+flex; flex-direction: 
+column; gap: 0.3rem; 
+margin-top: 
+0.3rem;"[31m
+          [36m/>[31m
+        
+[36m</div>[31m
+        [36m<div[31m
+          [33mstyle[
+31m=[32m"display: 
+flex; 
+justify-content: 
+space-between; 
+margin-top: 
+1rem;"[31m
+        [36m>[31m
+          
+[36m<button[31m
+            [33mtype
+[31m=[32m"submit"[31
+m
+          [36m>[31m
+            
+[0mAdd[0m
+          
+[36m</button>[31m
+          
+[36m<button[31m
+            [33mtype
+[31m=[32m"button"[31
+m
+          [36m>[31m
+            
+[0mCancel[0m
+          
+[36m</button>[31m
+        
+[36m</div>[31m
+      
+[36m</form>[31m
+    [36m</div>[31m
+  [36m</div>[31m
+[36m</body>[31m[39m
+[90m [2mΓ¥»[22m Obj
+ect.getElementError no
+de_modules/@testing-li
+brary/dom/dist/config.
+js:[2m37:19[22m[39m
+[90m [2mΓ¥»[22m nod
+e_modules/@testing-lib
+rary/dom/dist/query-he
+lpers.js:[2m76:38[22
+m[39m
+[90m [2mΓ¥»[22m nod
+e_modules/@testing-lib
+rary/dom/dist/query-he
+lpers.js:[2m52:17[22
+m[39m
+[90m [2mΓ¥»[22m nod
+e_modules/@testing-lib
+rary/dom/dist/query-he
+lpers.js:[2m95:19[22
+m[39m
+[36m [2mΓ¥»[22m src
+/__tests__/components/
+Modal.test.jsx:[2m61:
+27[22m[39m
+    [90m 59| [39m   
+         )[33m;[39m
+    [90m 60| [39m
+    [90m 61| [39m   
+         expect(screen
+.getByPlaceholderText(
+/task 
+title/i)).toBeInTΓÇª
+[2m Test Files [22m [1m[31m5 failed[39m[22m[2m | [22m[1m[32m5 passed[39m[22m[90m (10)[39m
+[2m      Tests [22m [1m[31m6 failed[39m[22m[2m | [22m[1m[32m24 passed[39m[22m[90m (30)[39m
+[2m   Start at [22m 19:42:59
+[2m   Duration [22m 3.57s[2m (transform 147ms, setup 2.64s, collect 613ms, tests 4.13s, environment 8.77s, prepare 240ms)[22m
+
+    [90m   | [39m   
+                      
+ [31m^[39m
+    [90m 62| [39m   
+     })[33m;[39m
+    [90m 63| [39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»Γ
+Ä»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ
+»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[7/7]ΓÄ
+»[22m[39m
+
