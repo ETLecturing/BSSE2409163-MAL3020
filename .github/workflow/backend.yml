@@ -1,0 +1,26 @@
+name: Backend CI
+
+on:
+  push:
+    paths:
+      - 'backend/**'
+      - 'frontendCopy/**'
+      - '.github/workflows/backend.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build backend image
+        run: docker build -t kanban-backend ./backend
+
+      - name: Run container (test)
+        run: |
+          docker run -d --name test-backend -p 5000:5000 kanban-backend
+          sleep 5
+          docker logs test-backend
+          docker rm -f test-backend

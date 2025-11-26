@@ -1,0 +1,25 @@
+name: Frontend CI/CD
+
+on:
+  push:
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build frontend extra image
+        run: docker build -t kanban-frontend ./frontendExtra
+
+      - name: Test container
+        run: |
+          docker run -d --name test-fe -p 5173:5173 kanban-frontend-extra
+          sleep 5
+          docker logs test-fe
+          docker rm -f test-fe
