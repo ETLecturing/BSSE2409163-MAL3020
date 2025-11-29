@@ -36,4 +36,5 @@ jobs:
         run: |
           docker compose down
           docker compose up -d --build
-        shell: pwsh
+        shell: powershell
+
