@@ -11,7 +11,7 @@ const taskSchema = new mongoose.Schema(
     },
     projectId: { type: mongoose.Schema.Types.ObjectId, ref: "Project", index: true },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", index: true },
-    assignedTo: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // <-- added this
+    assignedTo: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
   },
   { timestamps: true }

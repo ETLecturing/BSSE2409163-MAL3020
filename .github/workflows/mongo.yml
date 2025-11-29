@@ -4,14 +4,17 @@ on:
   push:
     branches:
       - main
+    paths:
+      - mongo/**
 
 jobs:
   validate:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
-
-      - name: Validate docker-compose syntax
+      - name: Validate Mongo container
         run: |
-          echo "Mongo uses official image. No build required."
+          docker run -d --name mongo-test -p 27017:27017 mongo:6.0
+          sleep 5
+          docker exec mongo-test mongo --eval "db.stats()"
+          docker rm -f mongo-test

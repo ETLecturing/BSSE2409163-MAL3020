@@ -4,20 +4,62 @@ on:
   push:
     branches:
       - main
+    paths:
+      - frontend/**
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
+      - uses: docker/setup-buildx-action@v2
 
       - name: Build frontend image
-        run: docker build -t kanban-frontend ./frontend
+        run: docker build -t kanban-frontend:${{ github.sha }} ./frontend
 
-      - name: Test container
+      - name: Test frontend container
         run: |
-          docker run -d --name test-fe -p 5173:5173 kanban-frontend
+          docker run -d --name test-fe -p 5173:5173 kanban-frontend:${{ github.sha }}
           sleep 5
           docker logs test-fe
           docker rm -f test-fe
+
+  deploy:
+    needs: build-and-test
+    runs-on: self-hosted
+    
+    env:
+      PROD_DIR: C:\Production\MAL3020-Full-Stack-Development
+    
+    steps:
+      - name: Create production directory if not exists
+        run: |
+          if (!(Test-Path "${{ env.PROD_DIR }}")) {
+            New-Item -ItemType Directory -Path "${{ env.PROD_DIR }}" -Force
+          }
+        shell: pwsh
+      
+      - name: Clone/Pull latest code to production
+        run: |
+          cd C:\Production
+          if (Test-Path "${{ env.PROD_DIR }}\.git") {
+            cd "${{ env.PROD_DIR }}"
+            git pull origin main
+          } else {
+            git clone https://github.com/TanggaPendek/MAL3020-Full-Stack-Development.git
+          }
+        shell: pwsh
+      
+      - name: Deploy with docker-compose
+        run: |
+          cd "${{ env.PROD_DIR }}"
+          docker-compose down
+          docker-compose up -d --build
+        shell: pwsh
+      
+      - name: Show deployment status
+        run: |
+          cd "${{ env.PROD_DIR }}"
+          docker-compose ps
+          Write-Host "`nFrontend deployed: http://localhost:5173" -ForegroundColor Green
+        shell: pwsh

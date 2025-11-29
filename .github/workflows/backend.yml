@@ -1,23 +1,71 @@
-name: Backend CI
+name: Backend CI/CD
 
 on:
   push:
     branches:
       - main
+    paths:
+      - backend/**
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
+    services:
+      mongo:
+        image: mongo:6.0
+        ports:
+          - 27017:27017
 
     steps:
       - uses: actions/checkout@v3
+      - uses: docker/setup-buildx-action@v2
 
       - name: Build backend image
-        run: docker build -t kanban-backend -f Dockerfile .
+        run: docker build -t kanban-backend:${{ github.sha }} ./backend
 
-      - name: Test container
+      - name: Test backend container
         run: |
-          docker run -d --name test-backend -p 5000:5000 kanban-backend
-          sleep 5
+          docker run -d --name test-backend -p 5000:5000 kanban-backend:${{ github.sha }}
+          until curl -s http://localhost:5000/health; do sleep 2; done
           docker logs test-backend
           docker rm -f test-backend
+
+  deploy:
+    needs: build-and-test
+    runs-on: self-hosted
+    
+    env:
+      PROD_DIR: C:\Production\MAL3020-Full-Stack-Development
+    
+    steps:
+      - name: Create production directory if not exists
+        run: |
+          if (!(Test-Path "${{ env.PROD_DIR }}")) {
+            New-Item -ItemType Directory -Path "${{ env.PROD_DIR }}" -Force
+          }
+        shell: pwsh
+      
+      - name: Clone/Pull latest code to production
+        run: |
+          cd C:\Production
+          if (Test-Path "${{ env.PROD_DIR }}\.git") {
+            cd "${{ env.PROD_DIR }}"
+            git pull origin main
+          } else {
+            git clone https://github.com/TanggaPendek/MAL3020-Full-Stack-Development.git
+          }
+        shell: pwsh
+      
+      - name: Deploy with docker-compose
+        run: |
+          cd "${{ env.PROD_DIR }}"
+          docker-compose down
+          docker-compose up -d --build
+        shell: pwsh
+      
+      - name: Show deployment status
+        run: |
+          cd "${{ env.PROD_DIR }}"
+          docker-compose ps
+          Write-Host "`nBackend deployed: http://localhost:5000" -ForegroundColor Green
+        shell: pwsh
